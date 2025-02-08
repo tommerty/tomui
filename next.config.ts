@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     registry: ["./registry/**/*"],
   },
   /* config options here */
+  output: "standalone",
 };
 
 export default nextConfig;

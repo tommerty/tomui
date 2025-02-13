@@ -47,6 +47,7 @@ const RegSnippet = () => {
                                     `Failed to copy "test" to clipboard`
                                 )
                             // test
+                            // test
                         }
                     />
                 </SnippetHeader>

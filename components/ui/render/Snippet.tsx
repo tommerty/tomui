@@ -41,8 +41,12 @@ const RegSnippet = () => {
                     <SnippetCopyButton
                         value={"code"}
                         onCopy={() => console.log(`Copied "test" to clipboard`)}
-                        onError={() =>
-                            console.error(`Failed to copy "test" to clipboard`)
+                        onError={
+                            () =>
+                                console.error(
+                                    `Failed to copy "test" to clipboard`
+                                )
+                            // test
                         }
                     />
                 </SnippetHeader>

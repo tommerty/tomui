@@ -11,18 +11,23 @@ import {
     SidebarGroupLabel,
     SidebarHeader,
     SidebarMenu,
+    SidebarMenuAction,
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarRail,
+    SidebarTrigger,
 } from "@/registry/complex-sidebar/complex-sidebar";
-import { IconCode } from "@tabler/icons-react";
+import { IconCode, IconLayoutNavbarExpand } from "@tabler/icons-react";
 import { components } from "@/lib/items";
 import { useRouter, usePathname } from "next/navigation";
+import * as tabler from "@tabler/icons-react";
+import Search from "../Search";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const router = useRouter();
     const pathname = usePathname();
-    console.log(pathname);
+    const [searchOpen, setSearchOpen] = React.useState(false);
+
     return (
         <Sidebar {...props} variant="primary">
             <SidebarHeader>
@@ -31,15 +36,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         isActive={pathname === "/"}
                         onClick={() => router.push("/")}
                     >
-                        <IconCode />
+                        <img
+                            src="https://cdn.doras.to/doras/assets/83bda65b-8d42-4011-9bf0-ab23402776f2/b81da5ac-e5be-45c1-b9b1-80b4f51e83af.png"
+                            alt="TomUI"
+                            className="size-4"
+                        />
                         TomUI
                     </SidebarMenuButton>
+                    <SidebarMenuAction asChild>
+                        <SidebarTrigger />
+                    </SidebarMenuAction>
                 </SidebarMenuItem>
+                <SidebarMenuItem onClick={() => setSearchOpen(true)}>
+                    <SidebarMenuButton>
+                        {/* @ts-ignore */}
+                        <tabler.IconSearch />
+                        Search...
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+                <Search open={searchOpen} onOpenChange={setSearchOpen} />
             </SidebarHeader>
             <SidebarContent>
                 {/* {data.navMain.map((item) => ( */}
                 <SidebarGroup>
-                    <SidebarGroupLabel>Components</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             <SidebarMenuItem>
@@ -47,30 +66,37 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                     asChild
                                     isActive={pathname === `/component`}
                                 >
-                                    <a href={`/component`}>All Components</a>
+                                    <a href={`/component`}>
+                                        <IconLayoutNavbarExpand />
+                                        Components
+                                    </a>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
-                            {components.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton
-                                        asChild
-                                        isActive={
-                                            pathname ===
-                                            `/component/${item.code}`
-                                        }
-                                    >
-                                        <a href={`/component/${item.code}`}>
-                                            {item.title}
-                                        </a>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
+                            {components.map((item) => {
+                                const Icon = tabler[item.iconName];
+                                return (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton
+                                            asChild
+                                            isActive={
+                                                pathname ===
+                                                `/component/${item.code}`
+                                            }
+                                        >
+                                            <a href={`/component/${item.code}`}>
+                                                {/* @ts-ignore */}
+                                                <Icon />
+                                                {item.title}
+                                            </a>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                );
+                            })}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
                 {/* ))} */}
             </SidebarContent>
-            <SidebarRail />
         </Sidebar>
     );
 }

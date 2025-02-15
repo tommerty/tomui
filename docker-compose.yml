@@ -1,0 +1,9 @@
+services:
+    doras:
+        image: ghcr.io/tommerty/ui:latest
+        pull_policy: always
+        ports:
+            - "${PORT:-3000}:3000"
+        environment:
+            NODE_ENV: production
+            PORT: 3000

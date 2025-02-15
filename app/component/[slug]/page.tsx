@@ -14,21 +14,17 @@ export function generateStaticParams() {
     }));
 }
 
-export default function ComponentPage({ params }: Props) {
-    const component = components.find((c) => c.code === params.slug);
+export default async function ComponentPage({ params }: Props) {
+    const component = await components.find((c) => c.code === params.slug);
 
     if (!component) {
         notFound();
     }
 
     return (
-        <ComponentPreview
-            title={component.title}
-            description={component.description}
-            code={component.code}
-        >
+        <ComponentPreview component={component}>
             {/* Here you can dynamically import and render your component */}
-            <div>Component: {component.code}</div>
+            <component.example />
         </ComponentPreview>
     );
 }

@@ -26,7 +26,7 @@ export default function Home() {
                     A collection of components built on top of shadcn/ui.
                 </p>
             </header>
-            <main className="flex flex-1 flex-col gap-8">
+            <div className="flex flex-1 flex-col gap-8">
                 <div className="flex flex-col gap-3 rounded-md border bg-card p-3">
                     <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight">
                         <div
@@ -49,7 +49,7 @@ export default function Home() {
                         </Button>
                     </a>
                 </div>
-            </main>
+            </div>
         </div>
     );
 }

@@ -23,7 +23,7 @@ jobs:
                   registry: ghcr.io
                   username: ${{ github.actor }}
                   #   Add this later
-                  password: ${{ secrets.TOME_READ_WRITE_DOCKER_PAT }}
+                  password: ${{ secrets.READ_WRITE_DOCKER_PAT }}
             - name: Build and push
               uses: docker/build-push-action@v6
               with:
@@ -36,4 +36,4 @@ jobs:
                   echo "Package version: ${{ github.event.package.package_version.version }}"
             - name: Trigger Coolify deployment
               run: |
-                  curl --request GET '${{ secrets.TOME_DEPLOY_WEBHOOK_URL }}' --header 'Authorization: Bearer ${{ secrets.TOME_DEPLOY }}'
+                  curl --request GET '${{ secrets.DEPLOY_WEBHOOK_URL }}' --header 'Authorization: Bearer ${{ secrets.DEPLOY_KEY }}'

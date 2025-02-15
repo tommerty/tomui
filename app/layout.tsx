@@ -18,7 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "tommerty/ui",
+    title: {
+        template: "%s | tommerty/ui",
+        default: "tommerty/ui", // a default is required when creating a template
+    },
     description: "Yet another UI library based on shadcn/ui",
     icons: {
         icon: "/favicon.ico",
@@ -33,15 +36,15 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} dark mx-auto max-w-7xl antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
             >
                 <SidebarProvider defaultOpen name="root">
                     <AppSidebar />
-                    <main className="w-full">
-                        <SidebarTrigger className="fixed left-3 top-3 hidden md:block" />
+                    <div className="relative mx-auto w-full max-w-screen-lg">
+                        {/* <SidebarTrigger className="fixed left-3 top-3 hidden md:block" /> */}
                         {children}
                         <MobileNav />
-                    </main>
+                    </div>
                 </SidebarProvider>
             </body>
         </html>

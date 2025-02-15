@@ -50,7 +50,7 @@ export default function ComponentPreview({ children, component }: Props) {
         navigator.clipboard.writeText(component.usage);
     };
     return (
-        <div className="relative mx-auto flex min-h-svh w-full flex-col gap-8 px-4 py-3">
+        <div className="relative mx-auto flex min-h-svh w-full min-w-full flex-col gap-8 px-4 py-3">
             <Breadcrumb className="sticky top-3 z-50 w-fit rounded-md bg-card px-2">
                 <BreadcrumbList className="sm:gap-1">
                     <BreadcrumbItem>

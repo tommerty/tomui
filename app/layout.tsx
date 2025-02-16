@@ -4,7 +4,7 @@ import "./globals.css";
 import {
     SidebarProvider,
     SidebarTrigger,
-} from "@/registry/complex-sidebar/complex-sidebar";
+} from "@/components/complex-sidebar/complex-sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import MobileNav from "@/components/MobileNav";
 const geistSans = Geist({

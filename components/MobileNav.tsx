@@ -7,7 +7,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarTrigger,
-} from "@/registry/complex-sidebar/complex-sidebar";
+} from "@/components/complex-sidebar/complex-sidebar";
 import { SheetTrigger } from "./ui/sheet";
 import * as tabler from "@tabler/icons-react";
 import { useRouter, usePathname } from "next/navigation";

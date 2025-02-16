@@ -16,7 +16,7 @@ import {
     SidebarMenuItem,
     SidebarRail,
     SidebarTrigger,
-} from "@/registry/complex-sidebar/complex-sidebar";
+} from "@/components/complex-sidebar/complex-sidebar";
 import { IconCode, IconLayoutNavbarExpand } from "@tabler/icons-react";
 import { components } from "@/lib/items";
 import { useRouter, usePathname } from "next/navigation";

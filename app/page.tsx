@@ -1,8 +1,6 @@
 import * as React from "react";
 import { OpenInV0Button } from "@/components/open-in-v0-button";
-import { HelloWorld } from "@/registry/hello-world/hello-world";
-import { ExampleForm } from "@/registry/example-form/example-form";
-import PokemonPage from "@/registry/complex-component/page";
+
 import {
     IconBrandGithub,
     IconCode,

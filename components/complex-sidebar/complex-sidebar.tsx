@@ -3,7 +3,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
-import { PanelLeft } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -35,7 +34,7 @@ type SidebarContext = {
     setOpenMobile: (open: boolean) => void;
     isMobile: boolean;
     toggleSidebar: () => void;
-    setGlobalOpen: (open: boolean) => void;
+    // setGlobalOpen: (open: boolean) => void;
 };
 
 const SidebarContext = React.createContext<SidebarContext | null>(null);
@@ -107,14 +106,14 @@ const SidebarProvider = React.forwardRef<
         }, [isMobile, setOpen, setOpenMobile]);
 
         // Helper to toggle the sidebar.
-        const setGlobalOpen = React.useCallback(
-            (value: boolean | ((value: boolean) => boolean)) => {
-                setOpenMobile(value);
-                setOpen(value);
-                return;
-            },
-            [isMobile, setOpen, setOpenMobile]
-        );
+        // const setGlobalOpen = React.useCallback(
+        //     (value: boolean | ((value: boolean) => boolean)) => {
+        //         setOpenMobile(value);
+        //         setOpen(value);
+        //         return;
+        //     },
+        //     [isMobile, setOpen, setOpenMobile]
+        // );
         // Adds a keyboard shortcut to toggle the sidebar.
         React.useEffect(() => {
             const handleKeyDown = (event: KeyboardEvent) => {
@@ -144,7 +143,7 @@ const SidebarProvider = React.forwardRef<
                 openMobile,
                 setOpenMobile,
                 toggleSidebar,
-                setGlobalOpen,
+                // setGlobalOpen,
             }),
             [
                 state,

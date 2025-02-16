@@ -3,17 +3,15 @@ import ComponentPreview from "@/components/ui/render/ComponentPreview";
 import { notFound } from "next/navigation";
 import type { Metadata, ResolvingMetadata } from "next";
 
-interface Props {
-    params: {
-        slug: string;
-    };
+interface PageProps {
+    params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata(
-    { params }: Props,
-    parent: ResolvingMetadata
-): Promise<Metadata> {
-    const component = components.find((c) => c.code === params.slug);
+export async function generateMetadata({
+    params,
+}: PageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const component = components.find((c) => c.code === slug);
 
     if (!component) {
         return {
@@ -22,10 +20,10 @@ export async function generateMetadata(
     }
 
     return {
-        title: `${component.title} Component`,
+        title: `${component.title}`,
         description: component.description || "UI Component from Registry",
         openGraph: {
-            title: `${component.title} - UI Component`,
+            title: `${component.title}`,
             description: component.description || "UI Component from Registry",
             type: "website",
         },
@@ -43,8 +41,9 @@ export function generateStaticParams() {
     }));
 }
 
-export default async function ComponentPage({ params }: Props) {
-    const component = await components.find((c) => c.code === params.slug);
+export default async function ComponentPage({ params }: PageProps) {
+    const { slug } = await params;
+    const component = components.find((c) => c.code === slug);
 
     if (!component) {
         notFound();

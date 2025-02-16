@@ -11,10 +11,7 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from "./ui/command";
-import {
-    SidebarMenuItem,
-    SidebarMenuButton,
-} from "@/registry/complex-sidebar/complex-sidebar";
+
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { User, CreditCard, Settings } from "lucide-react";
 import { useRouter } from "next/navigation";

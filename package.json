@@ -7,9 +7,11 @@
     "scripts": {
         "dev": "next dev --turbopack",
         "build": "next build",
+        "build:debug": "NEXT_DEBUG=true next build",
+        "build:trace": "NODE_OPTIONS='--trace-warnings --max-old-space-size=4096' NEXT_DEBUG=true next build --trace-deprecation --trace-sync-io",
+        "registry:build": "shadcn build",
         "start": "next start",
-        "lint": "next lint",
-        "registry:build": "shadcn build"
+        "lint": "next lint"
     },
     "dependencies": {
         "@fontsource-variable/geist": "^5.0.1",

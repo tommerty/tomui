@@ -5,13 +5,22 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json pnpm-lock.yaml registry.json ./
 COPY registry/ ./registry/
-RUN npm install -g pnpm && pnpm i --frozen-lockfile && pnpm shadcn build
+RUN echo "Starting dependency installation" && \
+    set -x && \
+    time (npm install -g pnpm && \
+    pnpm i --frozen-lockfile && \
+    pnpm shadcn build && \
+    echo "Dependency installation complete")
 
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm install -g pnpm && NEXT_TELEMETRY_DISABLED=1 pnpm run build
+RUN echo "Starting build process" && \
+    set -x && \
+    time (npm install -g pnpm && \
+    NEXT_TELEMETRY_DISABLED=1 pnpm run build && \
+    echo "Build process complete")
 
 FROM base AS runner
 WORKDIR /app

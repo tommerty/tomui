@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import {
     Sidebar,
     SidebarContent,
@@ -12,7 +11,7 @@ import {
     SidebarMenuItem,
     SidebarProvider,
     SidebarTrigger,
-} from "@/registry/complex-sidebar/complex-sidebar";
+} from "@/components/complex-sidebar/complex-sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { IconHome } from "@tabler/icons-react";
 

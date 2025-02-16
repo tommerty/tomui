@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
 import "./globals.css";
 import {
     SidebarProvider,
@@ -7,15 +8,6 @@ import {
 } from "@/components/complex-sidebar/complex-sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import MobileNav from "@/components/MobileNav";
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
     title: {
@@ -35,9 +27,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
-            >
+            <body className={`dark antialiased`}>
                 <SidebarProvider defaultOpen name="root">
                     <AppSidebar />
                     <div className="relative mx-auto w-full max-w-screen-lg">

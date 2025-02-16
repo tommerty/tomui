@@ -1,64 +1,24 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "tomui",
-  "homepage": "https://ui.tommerty.click",
-  "items": [
-    {
-      "name": "hello-world",
-      "type": "registry:component",
-      "title": "Hello World",
-      "description": "A simple hello world component",
-      "registryDependencies": ["button"],
-      "files": [
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "name": "tomui",
+    "homepage": "https://ui.tommerty.click",
+    "items": [
         {
-          "path": "registry/hello-world/hello-world.tsx",
-          "type": "registry:component"
+            "name": "adaptive-modal",
+            "type": "registry:component",
+            "title": "Adaptive Modal",
+            "description": "A single modal that you can use to display any content, depending on if mobile or not. If you're viewing on a mobile device, the modal will always be a drawer. Using the variant prop you can choose between a sheet, dialog or popover.",
+            "registryDependencies": ["dialog", "sheet", "popover"],
+            "files": [
+                {
+                    "path": "registry/adaptive-modal/components/adaptive-modal.tsx",
+                    "type": "registry:component"
+                },
+                {
+                    "path": "registry/adaptive-modal/hooks/use-mobile.tsx",
+                    "type": "registry:hook"
+                }
+            ]
         }
-      ]
-    },
-    {
-      "name": "example-form",
-      "type": "registry:component",
-      "title": "Example Form",
-      "description": "A contact form with Zod validation.",
-      "dependencies": ["zod"],
-      "registryDependencies": ["button", "input", "label", "textarea", "card"],
-      "files": [
-        {
-          "path": "registry/example-form/example-form.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "complex-component",
-      "type": "registry:component",
-      "title": "Complex Component",
-      "description": "A complex component showing hooks, libs and components.",
-      "registryDependencies": ["card"],
-      "files": [
-        {
-          "path": "registry/complex-component/page.tsx",
-          "type": "registry:page",
-          "target": "app/pokemon/page.tsx"
-        },
-        {
-          "path": "registry/complex-component/components/pokemon-card.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "registry/complex-component/components/pokemon-image.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "registry/complex-component/lib/pokemon.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "registry/complex-component/hooks/use-pokemon.ts",
-          "type": "registry:hook"
-        }
-      ]
-    }
-  ]
+    ]
 }

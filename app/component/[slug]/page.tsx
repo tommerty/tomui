@@ -1,10 +1,39 @@
 import { components } from "@/lib/items";
 import ComponentPreview from "@/components/ui/render/ComponentPreview";
 import { notFound } from "next/navigation";
+import type { Metadata, ResolvingMetadata } from "next";
 
 interface Props {
     params: {
         slug: string;
+    };
+}
+
+export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    const component = components.find((c) => c.code === params.slug);
+
+    if (!component) {
+        return {
+            title: "Component Not Found",
+        };
+    }
+
+    return {
+        title: `${component.title} Component`,
+        description: component.description || "UI Component from Registry",
+        openGraph: {
+            title: `${component.title} - UI Component`,
+            description: component.description || "UI Component from Registry",
+            type: "website",
+        },
+        twitter: {
+            card: "summary",
+            title: component.title,
+            description: component.description || "UI Component from Registry",
+        },
     };
 }
 
@@ -14,21 +43,16 @@ export function generateStaticParams() {
     }));
 }
 
-export default function ComponentPage({ params }: Props) {
-    const component = components.find((c) => c.code === params.slug);
+export default async function ComponentPage({ params }: Props) {
+    const component = await components.find((c) => c.code === params.slug);
 
     if (!component) {
         notFound();
     }
 
     return (
-        <ComponentPreview
-            title={component.title}
-            description={component.description}
-            code={component.code}
-        >
-            {/* Here you can dynamically import and render your component */}
-            <div>Component: {component.code}</div>
+        <ComponentPreview component={component}>
+            <component.example />
         </ComponentPreview>
     );
 }

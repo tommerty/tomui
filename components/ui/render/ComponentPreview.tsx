@@ -42,7 +42,7 @@ interface Props {
     children: React.ReactNode;
 }
 export default function ComponentPreview({ children, component }: Props) {
-    const installScript = `pnpm dlx shadcn@latest add https://ui.tommerty.com/registry/${component.code}.json`;
+    const installScript = `pnpm dlx shadcn@latest add https://ui.tommerty.com/r/${component.code}.json`;
     const copyToClipboard = () => {
         navigator.clipboard.writeText(installScript);
     };

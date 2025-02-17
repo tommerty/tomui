@@ -29,32 +29,31 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const [searchOpen, setSearchOpen] = React.useState(false);
 
     return (
-        <Sidebar {...props} variant="primary">
+        <Sidebar {...props} variant="inset" className="border-r">
             <SidebarHeader>
-                <SidebarMenuItem>
-                    <SidebarMenuButton
-                        isActive={pathname === "/"}
-                        onClick={() => router.push("/")}
-                    >
-                        <img
-                            src="https://cdn.doras.to/doras/assets/83bda65b-8d42-4011-9bf0-ab23402776f2/b81da5ac-e5be-45c1-b9b1-80b4f51e83af.png"
-                            alt="TomUI"
-                            className="size-4"
-                        />
-                        TomUI
-                    </SidebarMenuButton>
-                    <SidebarMenuAction asChild>
-                        <SidebarTrigger />
-                    </SidebarMenuAction>
-                </SidebarMenuItem>
-                <SidebarMenuItem onClick={() => setSearchOpen(true)}>
-                    <SidebarMenuButton>
-                        {/* @ts-ignore */}
-                        <tabler.IconSearch />
-                        Search...
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-                <Search open={searchOpen} onOpenChange={setSearchOpen} />
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton
+                            isActive={pathname === "/"}
+                            onClick={() => router.push("/")}
+                        >
+                            <img
+                                src="https://cdn.doras.to/doras/assets/83bda65b-8d42-4011-9bf0-ab23402776f2/b81da5ac-e5be-45c1-b9b1-80b4f51e83af.png"
+                                alt="TomUI"
+                                className="size-4"
+                            />
+                            TomUI
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem onClick={() => setSearchOpen(true)}>
+                        <SidebarMenuButton>
+                            {/* @ts-ignore */}
+                            <tabler.IconSearch />
+                            Search...
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <Search open={searchOpen} onOpenChange={setSearchOpen} />
+                </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
                 {/* {data.navMain.map((item) => ( */}

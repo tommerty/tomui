@@ -28,14 +28,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`dark antialiased`}>
-                <SidebarProvider defaultOpen name="root">
-                    <AppSidebar />
-                    <div className="relative mx-auto w-full max-w-screen-lg">
-                        {/* <SidebarTrigger className="fixed left-3 top-3 hidden md:block" /> */}
-                        {children}
-                        <MobileNav />
-                    </div>
-                </SidebarProvider>
+                <div className="relative w-full">
+                    {/* <SidebarTrigger className="fixed left-3 top-3 hidden md:block" /> */}
+                    {children}
+                </div>
             </body>
         </html>
     );

@@ -16,9 +16,13 @@ export default function Home() {
     return (
         <div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-4 py-8">
             <header className="flex flex-col gap-1">
-                <h1 className="flex items-center gap-2 text-3xl font-bold tracking-tight">
-                    <IconCode />
-                    Tommerty UI
+                <h1 className="flex w-fit items-center gap-2 rounded-md bg-card px-3 text-3xl font-bold tracking-tight">
+                    <img
+                        src="https://cdn.doras.to/doras/assets/83bda65b-8d42-4011-9bf0-ab23402776f2/b81da5ac-e5be-45c1-b9b1-80b4f51e83af.png"
+                        alt="TomUI"
+                        className="size-10"
+                    />
+                    TomUI
                 </h1>
                 <p className="text-muted-foreground">
                     A collection of components built on top of shadcn/ui.

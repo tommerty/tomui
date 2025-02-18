@@ -8,6 +8,7 @@ import AdaptiveModalExample1 from "@/components/examples/unified-modal-example-1
 
 export type ComponentItem = {
     title: string;
+    group: string;
     iconName: keyof typeof tabler;
     example: () => JSX.Element;
     description: string;
@@ -29,6 +30,7 @@ export type ComponentItem = {
 export const components: ComponentItem[] = [
     {
         title: "Adaptive Modal",
+        group: "Modal",
         iconName: "IconLayoutDashboard",
         example: AdaptiveModalExample1,
         description:

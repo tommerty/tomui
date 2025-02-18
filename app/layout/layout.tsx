@@ -23,7 +23,7 @@ export default function Layout({
                 </div>
                 <div className="flex flex-1 overflow-hidden">
                     <SidebarProvider>
-                        <Sidebar className="border-r">
+                        <Sidebar className="" variant="floating">
                             <SidebarHeader>
                                 <SidebarMenu>
                                     <SidebarMenuItem>
@@ -58,7 +58,7 @@ export default function Layout({
             </div>
 
             <SidebarProvider>
-                <Sidebar side="right" className="h-screen border-l">
+                <Sidebar side="right" className="">
                     <SidebarHeader>
                         <SidebarMenu>
                             <SidebarMenuItem>

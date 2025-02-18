@@ -79,6 +79,27 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         },
         ref
     ) => {
+        const containerRef = React.useRef<HTMLDivElement>(null);
+        const [maxHeight, setMaxHeight] = React.useState<number | undefined>();
+
+        React.useEffect(() => {
+            const container = containerRef.current;
+            if (!container) return;
+
+            const resizeObserver = new ResizeObserver((entries) => {
+                const entry = entries[0];
+                if (entry) {
+                    const viewportHeight = window.innerHeight;
+                    const containerTop =
+                        entry.target.getBoundingClientRect().top;
+                    const availableHeight = viewportHeight - containerTop - 16; // 16px buffer
+                    setMaxHeight(availableHeight);
+                }
+            });
+
+            resizeObserver.observe(container);
+            return () => resizeObserver.disconnect();
+        }, []);
         const { isMobile, open } = useSidebar();
 
         if (isMobile) {
@@ -93,20 +114,51 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
 
         return (
             <div
-                ref={ref}
-                data-state={open ? "open" : "closed"}
-                data-side={side}
-                data-collapsible={collapsible}
+                ref={containerRef}
                 className={cn(
-                    "flex h-full w-64 flex-col transition-all duration-200",
-                    collapsible === "icon" && !open && "w-16",
-                    variant === "floating" && "rounded-lg border shadow-lg",
-                    variant === "inset" && "m-2 rounded-lg border",
-                    className
+                    "group peer relative hidden md:block",
+                    variant === "floating" && "p-2",
+                    "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
                 )}
-                {...props}
+                data-state={open ? "open" : "closed"}
             >
-                {children}
+                {/* This handles the sidebar gap */}
+                <div
+                    className={cn(
+                        "relative w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-in-out",
+                        "group-data-[collapsible=offcanvas]:w-0",
+                        variant === "floating" &&
+                            "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.0))]",
+                        "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
+                    )}
+                />
+
+                <div
+                    ref={ref}
+                    data-state={open ? "open" : "closed"}
+                    data-side={side}
+                    data-collapsible={collapsible}
+                    // style={{
+                    //     maxHeight:
+                    //         variant === "nested" && maxHeight
+                    //             ? `${maxHeight}px`
+                    //             : undefined,
+                    // }}
+                    className={cn(
+                        "flex h-full w-64 flex-col transition-all duration-200",
+                        collapsible === "icon" && !open && "w-16",
+                        variant === "floating" &&
+                            "rounded-lg border p-2 shadow-lg",
+
+                        variant === "inset" && "",
+                        className
+                    )}
+                    {...props}
+                >
+                    <div className="flex h-full w-full flex-col rounded-lg bg-background">
+                        {children}
+                    </div>
+                </div>
             </div>
         );
     }
@@ -117,7 +169,7 @@ export const SidebarHeader = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("p-4", className)} {...props} />
+    <div ref={ref} className={cn("px-4", className)} {...props} />
 ));
 SidebarHeader.displayName = "SidebarHeader";
 
@@ -127,7 +179,7 @@ export const SidebarContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <div
         ref={ref}
-        className={cn("flex-1 overflow-auto p-4", className)}
+        className={cn("flex-1 overflow-auto px-4", className)}
         {...props}
     />
 ));

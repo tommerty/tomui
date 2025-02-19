@@ -1,23 +1,27 @@
 import * as React from "react";
-
-const MOBILE_BREAKPOINT = 768;
+import { useViewport } from "@/components/ui/render/ComponentBlockViewer";
 
 export function useIsMobile() {
-    const [isMobile, setIsMobile] = React.useState<boolean | undefined>(
-        undefined
-    );
+    const viewport = useViewport();
+    const [isMobile, setIsMobile] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        const mql = window.matchMedia(
-            `(max-width: ${MOBILE_BREAKPOINT - 1}px)`
-        );
+        const mql = window.matchMedia(`(max-width: 767px)`);
         const onChange = () => {
-            setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+            setIsMobile(window.innerWidth < 768);
         };
-        mql.addEventListener("change", onChange);
-        setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-        return () => mql.removeEventListener("change", onChange);
-    }, []);
 
-    return !!isMobile;
+        // If we're in the ComponentBlockViewer context, use that value
+        if (viewport) {
+            setIsMobile(viewport.isMobile);
+            return;
+        }
+
+        // Otherwise use the regular mobile detection
+        mql.addEventListener("change", onChange);
+        setIsMobile(window.innerWidth < 768);
+        return () => mql.removeEventListener("change", onChange);
+    }, [viewport]);
+
+    return viewport ? viewport.isMobile : isMobile;
 }

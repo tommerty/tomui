@@ -7,6 +7,7 @@ import {
     SidebarMenuItem,
     SidebarMenuButton,
     SidebarInset,
+    SidebarGroup,
 } from "@/components/complex-sidebar/complex-sidebar";
 
 export default function Home() {
@@ -20,28 +21,32 @@ export default function Home() {
                     />
                 ))}
             </div>
-            <SidebarProvider name="right" className="">
-                <Sidebar className="pl-0" side="right" absolute>
-                    <SidebarHeader>
-                        <SidebarMenu>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton>Dashboard</SidebarMenuButton>
-                            </SidebarMenuItem>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton>Settings</SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
-                    </SidebarHeader>
+            <SidebarProvider
+                name="right-sidebar"
+                className="hidden lg:block"
+                style={{
+                    // @ts-ignore
+                    "--sidebar-width": "15rem",
+                }}
+            >
+                <Sidebar
+                    className="border-none pl-0"
+                    side="right"
+                    absolute
+                    collapsible="none"
+                >
                     <SidebarContent>
-                        <SidebarMenu>
-                            {Array.from({ length: 50 }).map((_, i) => (
-                                <SidebarMenuItem key={i}>
-                                    <SidebarMenuButton>
-                                        Item {i + 1}
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
-                        </SidebarMenu>
+                        <SidebarGroup>
+                            <SidebarMenu>
+                                {Array.from({ length: 50 }).map((_, i) => (
+                                    <SidebarMenuItem key={i}>
+                                        <SidebarMenuButton>
+                                            Item {i + 1}
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                ))}
+                            </SidebarMenu>
+                        </SidebarGroup>
                     </SidebarContent>
                 </Sidebar>
             </SidebarProvider>

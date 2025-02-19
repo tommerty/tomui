@@ -1,5 +1,4 @@
 "use client";
-import { create } from "zustand";
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
@@ -10,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSidebarStore } from "@/store/use-sidebar-store";
+
 import {
     Tooltip,
     TooltipContent,
@@ -65,18 +66,21 @@ const SidebarProvider = React.forwardRef<
         },
         ref
     ) => {
-        const [mounted, setMounted] = React.useState(false);
         const isMobile = useIsMobile();
         const [openMobile, setOpenMobile] = React.useState(false);
-        const [_open, _setOpen] = React.useState(defaultOpen);
 
-        React.useEffect(() => {
-            setMounted(true);
-            const savedState = localStorage.getItem(`${name}:state`);
-            if (savedState) {
-                _setOpen(savedState === "true");
-            }
-        }, [name]);
+        // Get initial state from Zustand store
+        const sidebarStates = useSidebarStore((state) => state.sidebarStates);
+        const toggleSidebarStore = useSidebarStore(
+            (state) => state.toggleSidebar
+        );
+
+        // Initialize with store value or default
+        const [_open, _setOpen] = React.useState(() => {
+            return (
+                sidebarStates[name as keyof typeof sidebarStates] ?? defaultOpen
+            );
+        });
 
         const open = openProp ?? _open;
 
@@ -88,10 +92,10 @@ const SidebarProvider = React.forwardRef<
                     setOpenProp(openState);
                 } else {
                     _setOpen(openState);
+                    toggleSidebarStore(name as keyof typeof sidebarStates);
                 }
-                localStorage.setItem(`${name}:state`, String(openState));
             },
-            [setOpenProp, open, name]
+            [setOpenProp, open, name, toggleSidebarStore]
         );
 
         const toggleSidebar = React.useCallback(() => {
@@ -137,10 +141,6 @@ const SidebarProvider = React.forwardRef<
                 toggleSidebar,
             ]
         );
-
-        if (!mounted) {
-            return null;
-        }
 
         return (
             <SidebarContext.Provider value={contextValue}>
@@ -265,7 +265,7 @@ const Sidebar = React.forwardRef<
                             : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
                         // Adjust the padding for floating and inset variants.
                         variant === "floating" || variant === "inset"
-                            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.0)_+0px)]"
+                            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.0)_+0px)] group-data-[side=left]:pr-0 group-data-[side=right]:pl-0"
                             : variant === "primary"
                               ? "py-2 group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
                               : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
@@ -465,7 +465,7 @@ const SidebarGroup = React.forwardRef<
             ref={ref}
             data-sidebar="group"
             className={cn(
-                "relative flex w-full min-w-0 flex-col px-2",
+                "relative flex w-full min-w-0 flex-col p-2",
                 className
             )}
             {...props}

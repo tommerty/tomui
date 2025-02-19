@@ -1,9 +1,8 @@
-import {
-    SidebarProvider,
-    SidebarTrigger,
-} from "@/components/complex-sidebar/complex-sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
-import MobileNav from "@/components/MobileNav";
+
+import React, { Suspense } from "react";
+import Loading from "../loading";
+import Nav from "@/components/ui/Nav";
 
 export default function Layout({
     children,
@@ -11,13 +10,15 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     return (
-        <SidebarProvider defaultOpen name="root">
-            <AppSidebar />
-            <div className="relative mx-auto w-full max-w-screen-lg">
-                {/* <SidebarTrigger className="fixed left-3 top-3 hidden md:block" /> */}
-                {children}
-                <MobileNav />
-            </div>
-        </SidebarProvider>
+        <div className="flex h-dvh">
+            <Suspense fallback={<Loading />}>
+                <AppSidebar />
+
+                <main className="mt-2 flex flex-1 flex-col overflow-hidden px-2">
+                    <Nav />
+                    <div className="flex-1 overflow-auto">{children}</div>
+                </main>
+            </Suspense>
+        </div>
     );
 }

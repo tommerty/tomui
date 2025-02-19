@@ -2,6 +2,15 @@ import { components } from "@/lib/items";
 import ComponentPreview from "@/components/ui/render/ComponentPreview";
 import { notFound } from "next/navigation";
 import type { Metadata, ResolvingMetadata } from "next";
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarGroup,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProvider,
+} from "@/components/complex-sidebar/complex-sidebar";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -50,8 +59,10 @@ export default async function ComponentPage({ params }: PageProps) {
     }
 
     return (
-        <ComponentPreview component={component}>
-            <component.example />
-        </ComponentPreview>
+        <div className="flex h-full">
+            <ComponentPreview component={component}>
+                <component.example />
+            </ComponentPreview>
+        </div>
     );
 }

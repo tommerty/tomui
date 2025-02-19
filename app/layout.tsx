@@ -31,7 +31,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`dark antialiased`}>
-                <div className="relative w-full">
+                <div className="relative mx-auto w-full max-w-screen-2xl">
                     {/* <SidebarTrigger className="fixed left-3 top-3 hidden md:block" /> */}
                     {children}
                 </div>

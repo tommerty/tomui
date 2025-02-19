@@ -22,6 +22,7 @@ import { useRouter, usePathname } from "next/navigation";
 import * as tabler from "@tabler/icons-react";
 import Search from "../Search";
 import { useSidebarStore } from "@/store/use-sidebar-store";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const router = useRouter();
@@ -30,10 +31,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const isOpen = useSidebarStore(
         (state) => state.sidebarStates["app-sidebar"]
     );
+    const openMobile = useSidebarStore((state) => state.openMobile);
+    const setOpenMobile = useSidebarStore((state) => state.setOpenMobile);
+    const isMobile = useIsMobile();
 
     return (
         <SidebarProvider open={isOpen} name="app-sidebar">
-            <Sidebar {...props} variant="inset" className="border-r">
+            <Sidebar {...props} variant="floating">
                 <SidebarHeader>
                     <SidebarMenu>
                         <SidebarMenuItem>
@@ -49,13 +53,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 TomUI
                             </SidebarMenuButton>
                         </SidebarMenuItem>
-                        <SidebarMenuItem onClick={() => setSearchOpen(true)}>
-                            <SidebarMenuButton>
-                                {/* @ts-ignore */}
-                                <tabler.IconSearch />
-                                Search...
-                            </SidebarMenuButton>
-                        </SidebarMenuItem>
+                        {isMobile == true && (
+                            <SidebarMenuItem
+                                onClick={() => setSearchOpen(true)}
+                            >
+                                <SidebarMenuButton>
+                                    {/* @ts-ignore */}
+                                    <tabler.IconSearch />
+                                    Search...
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        )}
                         <Search
                             open={searchOpen}
                             onOpenChange={setSearchOpen}

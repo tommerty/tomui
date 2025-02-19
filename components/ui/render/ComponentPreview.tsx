@@ -112,7 +112,7 @@ export default function ComponentPreview({ children, component }: Props) {
 
     return (
         <>
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-scroll scroll-smooth p-4 py-12">
+            <div className="flex h-full flex-1 flex-col gap-4 overflow-scroll scroll-smooth p-4 pb-2 pt-12">
                 <header className="relative flex flex-col gap-1">
                     <h1
                         className="scroll-mt-6 text-3xl font-bold tracking-tight"

@@ -279,7 +279,7 @@ const Sidebar = React.forwardRef<
                         className={cn(
                             "flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=primary]:rounded-r-lg group-data-[variant=floating]:border group-data-[variant=primary]:border group-data-[variant=primary]:border-l-0 group-data-[variant=floating]:border-sidebar-border group-data-[variant=primary]:border-sidebar-border group-data-[variant=floating]:shadow group-data-[variant=primary]:shadow",
 
-                            absolute && variant === "floating" && "bg-popover",
+                            absolute && variant === "floating" && "",
                             subClassName
                         )}
                     >

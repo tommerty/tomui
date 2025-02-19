@@ -12,7 +12,7 @@ export default function Layout({
     return (
         <div className="flex h-dvh">
             <Suspense fallback={<Loading />}>
-                <AppSidebar />
+                <AppSidebar absolute />
 
                 <main className="mt-2 flex flex-1 flex-col overflow-hidden px-2">
                     <Nav />

@@ -6,43 +6,42 @@ import {
     SidebarMenu,
     SidebarMenuItem,
     SidebarMenuButton,
-} from "@/registry/sidebar/sidebar";
+    SidebarInset,
+} from "@/components/complex-sidebar/complex-sidebar";
 
 export default function Home() {
     return (
-        <div
-            className="relative flex flex-1 gap-4 overflow-hidden"
-            style={{
-                contain: "paint, layout, size",
-            }}
-        >
-            <div className="relative flex-1 overflow-y-auto">
+        <div className="flex h-full">
+            <div className="flex flex-1 flex-col gap-4 overflow-scroll p-4">
                 {Array.from({ length: 40 }).map((_, index) => (
                     <div
                         key={index}
-                        className="mb-4 h-12 w-full rounded-lg bg-card"
+                        className="aspect-video h-12 w-full rounded-lg bg-card"
                     />
                 ))}
             </div>
-
-            <SidebarProvider>
-                <Sidebar variant="floating">
+            <SidebarProvider name="right" className="">
+                <Sidebar className="pl-0" side="right" absolute>
                     <SidebarHeader>
                         <SidebarMenu>
                             <SidebarMenuItem>
-                                <SidebarMenuButton>
-                                    Nested Menu
-                                </SidebarMenuButton>
+                                <SidebarMenuButton>Dashboard</SidebarMenuButton>
+                            </SidebarMenuItem>
+                            <SidebarMenuItem>
+                                <SidebarMenuButton>Settings</SidebarMenuButton>
                             </SidebarMenuItem>
                         </SidebarMenu>
                     </SidebarHeader>
                     <SidebarContent>
-                        {Array.from({ length: 50 }).map((_, index) => (
-                            <div
-                                key={index}
-                                className="mb-2 h-12 w-full rounded-lg bg-muted"
-                            />
-                        ))}
+                        <SidebarMenu>
+                            {Array.from({ length: 50 }).map((_, i) => (
+                                <SidebarMenuItem key={i}>
+                                    <SidebarMenuButton>
+                                        Item {i + 1}
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarMenu>
                     </SidebarContent>
                 </Sidebar>
             </SidebarProvider>

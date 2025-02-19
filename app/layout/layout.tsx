@@ -1,3 +1,4 @@
+import { AppSidebar } from "@/components/ui/app-sidebar";
 import { cn } from "@/lib/utils";
 import {
     Sidebar,
@@ -7,7 +8,12 @@ import {
     SidebarMenu,
     SidebarMenuItem,
     SidebarMenuButton,
-} from "@/registry/sidebar/sidebar";
+    SidebarTrigger,
+} from "@/components/complex-sidebar/complex-sidebar";
+import React, { Suspense } from "react";
+import SidebarButton from "@/components/ui/SidebarButton";
+import { IconLayoutNavbarExpand, IconMenu2 } from "@tabler/icons-react";
+import Loading from "../loading";
 
 export default function Layout({
     children,
@@ -15,64 +21,20 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex h-dvh max-h-dvh min-h-dvh">
-            <div className="flex flex-1 flex-col">
-                <div className="sticky top-0 z-10 flex w-full items-center border-b bg-background/80 p-3 backdrop-blur">
-                    <p>test</p>
-                    <p className="ml-auto">test</p>
-                </div>
-                <div className="flex flex-1 overflow-hidden">
-                    <SidebarProvider>
-                        <Sidebar className="" variant="floating">
-                            <SidebarHeader>
-                                <SidebarMenu>
-                                    <SidebarMenuItem>
-                                        <SidebarMenuButton>
-                                            Dashboard
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                    <SidebarMenuItem>
-                                        <SidebarMenuButton>
-                                            Settings
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                </SidebarMenu>
-                            </SidebarHeader>
-                            <SidebarContent>
-                                <SidebarMenu>
-                                    {Array.from({ length: 50 }).map((_, i) => (
-                                        <SidebarMenuItem key={i}>
-                                            <SidebarMenuButton>
-                                                Item {i + 1}
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                    ))}
-                                </SidebarMenu>
-                            </SidebarContent>
-                        </Sidebar>
-                    </SidebarProvider>
-                    <main className="flex-1 overflow-y-auto">
-                        <div className="space-y-4 p-3">{children}</div>
-                    </main>
-                </div>
-            </div>
+        <div className="flex h-dvh">
+            <Suspense fallback={<Loading />}>
+                <AppSidebar />
 
-            <SidebarProvider>
-                <Sidebar side="right" className="">
-                    <SidebarHeader>
-                        <SidebarMenu>
-                            <SidebarMenuItem>
-                                <SidebarMenuButton>
-                                    Right Menu
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
-                    </SidebarHeader>
-                    <SidebarContent>
-                        {/* Right sidebar content */}
-                    </SidebarContent>
-                </Sidebar>
-            </SidebarProvider>
+                <main className="mt-2 flex flex-1 flex-col overflow-hidden px-2">
+                    <header className="flex w-full items-center rounded-md border bg-background/80 p-3 backdrop-blur">
+                        <SidebarButton sidebarName="app-sidebar">
+                            <IconLayoutNavbarExpand />
+                        </SidebarButton>
+                        <p className="ml-auto">test</p>
+                    </header>
+                    <div className="flex-1 overflow-auto">{children}</div>
+                </main>
+            </Suspense>
         </div>
     );
 }

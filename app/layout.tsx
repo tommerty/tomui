@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
 import "./globals.css";
@@ -8,6 +9,8 @@ import {
 } from "@/components/complex-sidebar/complex-sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import MobileNav from "@/components/MobileNav";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export const metadata: Metadata = {
     title: {

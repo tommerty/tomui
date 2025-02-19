@@ -11,6 +11,7 @@ import {
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Nav from "@/components/ui/Nav";
+import Link from "next/link";
 
 // This page displays items from the custom registry.
 // You are free to implement this with your own design as needed.
@@ -45,12 +46,12 @@ export default function Home() {
                     <p className="text-muted-foreground">
                         Explore the existing components.
                     </p>
-                    <a href="/component">
+                    <Link href="/component">
                         <Button className="flex w-fit items-center gap-1 border border-transparent bg-accent font-bold text-foreground hover:border-border hover:bg-background/50">
                             <IconNavigation />
                             Explore
                         </Button>
-                    </a>
+                    </Link>
                 </div>
                 <div className="flex flex-col gap-3 rounded-md border bg-card p-3">
                     <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight">

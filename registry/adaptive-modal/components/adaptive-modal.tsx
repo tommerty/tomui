@@ -112,7 +112,7 @@ const AdaptiveModalContent = React.forwardRef<
         case "dialog":
             return (
                 <DialogContent
-                    className={cn("sm:max-w-[425px]", className)}
+                    className={cn("p-4 sm:max-w-[425px]", className)}
                     {...props}
                 >
                     {children}

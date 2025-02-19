@@ -8,8 +8,10 @@ import AdaptiveModalExample1 from "@/components/examples/unified-modal-example-1
 
 export type ComponentItem = {
     title: string;
+    group: string;
     iconName: keyof typeof tabler;
     example: () => JSX.Element;
+    exampleName?: string;
     description: string;
     code: string;
     props?: {
@@ -29,8 +31,10 @@ export type ComponentItem = {
 export const components: ComponentItem[] = [
     {
         title: "Adaptive Modal",
+        group: "Modal",
         iconName: "IconLayoutDashboard",
         example: AdaptiveModalExample1,
+        exampleName: "Adaptive Modal",
         description:
             "A single modal that you can use to display any content, depending on if mobile or not. If you're viewing on a mobile device, the modal will always be a drawer. Using the variant prop you can choose between a sheet, dialog or popover.",
         code: "adaptive-modal",
@@ -56,13 +60,13 @@ export const components: ComponentItem[] = [
         ],
         alternativeExamples: [
             {
-                title: "Display a dialog instead of sheet on desktop",
+                title: "Dialog",
                 description:
                     "Utilizing the variant prop, we can display a dialog instead of a sheet on desktop.",
                 exampleComponent: AdaptiveModalExampleDialog,
             },
             {
-                title: "Display a popover instead of sheet on desktop",
+                title: "Popover",
                 description:
                     "Utilizing the variant prop, we can display a dialog instead of a sheet on desktop.",
                 exampleComponent: AdaptiveModalExamplePopover,

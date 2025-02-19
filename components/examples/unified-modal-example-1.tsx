@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { IconHandLoveYou } from "@tabler/icons-react";
+import { IconHandLoveYou, IconUser } from "@tabler/icons-react";
 import { Input } from "../ui/input";
 import {
     AdaptiveModal,
@@ -12,6 +12,7 @@ import {
     AdaptiveModalDescription,
     AdaptiveModalFooter,
 } from "@/registry/adaptive-modal/components/adaptive-modal";
+import { Label } from "../ui/label";
 
 export default function AdaptiveModalExample1() {
     return (
@@ -37,19 +38,33 @@ export default function AdaptiveModalExample1() {
 export function AdaptiveModalExampleDialog() {
     return (
         <AdaptiveModal variant="dialog">
-            <AdaptiveModalTrigger>
-                <Button>Dialog</Button>
+            <AdaptiveModalTrigger asChild>
+                <div className="flex w-full cursor-pointer items-center rounded-md border bg-card p-3 transition-all duration-150 hover:bg-border">
+                    <IconUser size={36} />
+                    <div className="flex flex-col">
+                        <p className="font-bold">User</p>
+                        <p>email@domain.com</p>
+                    </div>
+                </div>
             </AdaptiveModalTrigger>
             <AdaptiveModalContent>
                 <AdaptiveModalHeader>
-                    <AdaptiveModalTitle>Welcome</AdaptiveModalTitle>
-                    <AdaptiveModalDescription>
-                        This is a description
-                    </AdaptiveModalDescription>
+                    <AdaptiveModalTitle>Edit</AdaptiveModalTitle>
                 </AdaptiveModalHeader>
-                <div>Content goes here</div>
+                <div className="flex flex-col gap-4">
+                    <div className="flex flex-col">
+                        <Label className="text-sm font-semibold">
+                            Username
+                        </Label>
+                        <Input placeholder="user" />
+                    </div>
+                    <div className="flex flex-col">
+                        <Label className="text-sm font-semibold">Email</Label>
+                        <Input placeholder="email@domain.com" />
+                    </div>
+                </div>
                 <AdaptiveModalFooter>
-                    <Button>Save changes</Button>
+                    <Button>Update</Button>
                 </AdaptiveModalFooter>
             </AdaptiveModalContent>
         </AdaptiveModal>

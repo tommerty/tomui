@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
 import "./globals.css";
@@ -8,6 +9,8 @@ import {
 } from "@/components/complex-sidebar/complex-sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import MobileNav from "@/components/MobileNav";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export const metadata: Metadata = {
     title: {
@@ -28,14 +31,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`dark antialiased`}>
-                <SidebarProvider defaultOpen name="root">
-                    <AppSidebar />
-                    <div className="relative mx-auto w-full max-w-screen-lg">
-                        {/* <SidebarTrigger className="fixed left-3 top-3 hidden md:block" /> */}
-                        {children}
-                        <MobileNav />
-                    </div>
-                </SidebarProvider>
+                <div className="relative mx-auto w-full max-w-screen-2xl">
+                    {children}
+                </div>
             </body>
         </html>
     );

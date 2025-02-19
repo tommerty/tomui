@@ -37,7 +37,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return (
         <SidebarProvider open={isOpen} name="app-sidebar">
-            <Sidebar {...props} variant="floating">
+            <Sidebar {...props} variant="floating" className="">
                 <SidebarHeader>
                     <SidebarMenu>
                         <SidebarMenuItem>

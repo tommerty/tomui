@@ -98,7 +98,7 @@ export function ComponentBlockViewer({
                 >
                     <div
                         ref={previewRef}
-                        className="flex h-full w-full place-content-center items-center rounded-md bg-card p-3 transition-all duration-200"
+                        className="flex h-full w-full place-content-center items-center rounded-md border p-3 transition-all duration-200"
                     >
                         {children}
                     </div>

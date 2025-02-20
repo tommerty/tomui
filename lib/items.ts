@@ -5,6 +5,9 @@ import UnifiedModalExample1, {
 import { JSX } from "react";
 import * as tabler from "@tabler/icons-react";
 import AdaptiveModalExample1 from "@/components/examples/unified-modal-example-1";
+import CodeCopyExample, {
+    CodeCopyMinimal,
+} from "@/components/examples/code-snippet";
 
 export type ComponentItem = {
     title: string;
@@ -97,5 +100,110 @@ export const components: ComponentItem[] = [
         </AdaptiveModalFooter>
     </AdaptiveModalContent>
 </AdaptiveModal>`,
+    },
+    {
+        title: "Code Snippet",
+        group: "Misc",
+        iconName: "IconCode",
+        example: CodeCopyExample,
+        exampleName: "Code Snippet",
+        description:
+            "A versatile code snippet component with copy functionality and multiple display variants. Supports tabs for different code examples and syntax highlighting.",
+        code: "code-snippet",
+        props: [
+            {
+                name: "code",
+                type: "string",
+                required: true,
+                description: "The code content to display",
+            },
+            {
+                name: "language",
+                type: "string",
+                default: "bash",
+                description: "Programming language for syntax highlighting",
+            },
+            {
+                name: "variant",
+                type: '"default" | "minimal"',
+                default: "default",
+                description: "Display style of the code snippet",
+            },
+            {
+                name: "className",
+                type: "string",
+                description: "Additional classes for the component",
+            },
+            {
+                name: "containerClassName",
+                type: "string",
+                description: "Classes for the container element",
+            },
+            {
+                name: "preClassName",
+                type: "string",
+                description: "Classes for the pre element",
+            },
+            {
+                name: "tabsListClassName",
+                type: "string",
+                description: "Classes for the tabs list",
+            },
+            {
+                name: "tabsTriggerClassName",
+                type: "string",
+                description: "Classes for tab triggers",
+            },
+            {
+                name: "tabsContentClassName",
+                type: "string",
+                description: "Classes for tabs content",
+            },
+            {
+                name: "copyButtonClassName",
+                type: "string",
+                description: "Classes for the copy button",
+            },
+            {
+                name: "tabs",
+                type: "{ label: string; code: string; language?: string; }[]",
+                description:
+                    "Array of tab configurations for multiple code examples",
+            },
+        ],
+        alternativeExamples: [
+            {
+                title: "Minimal",
+                description:
+                    "A simplified version with just code and copy button",
+                exampleComponent: CodeCopyMinimal,
+            },
+        ],
+        usage: `import { CodeSnippet } from "@/components/ui/code-snippet";
+    
+    // Default with tabs
+    <CodeSnippet
+      code="npm install @shadcn/ui"
+      tabs={[
+        {
+          label: "npm",
+          code: "npm install @shadcn/ui",
+        },
+        {
+          label: "pnpm",
+          code: "pnpm add @shadcn/ui",
+        },
+        {
+          label: "yarn",
+          code: "yarn add @shadcn/ui",
+        },
+      ]}
+    />
+    
+    // Minimal variant
+    <CodeSnippet
+      code="git clone https://github.com/shadcn/ui.git"
+      variant="minimal"
+    />`,
     },
 ];

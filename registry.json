@@ -19,6 +19,19 @@
                     "type": "registry:hook"
                 }
             ]
+        },
+        {
+            "name": "code-snippet",
+            "type": "registry:component",
+            "title": "Code Snippet",
+            "description": "A simple component to display a code snippet with a copy button, and multiple language options via tabs",
+            "registryDependencies": ["tabs", "button", "prism-react-renderer"],
+            "files": [
+                {
+                    "path": "registry/code-snippet/code-snippet.tsx",
+                    "type": "registry:component"
+                }
+            ]
         }
     ]
 }

@@ -96,6 +96,7 @@ export default function Home() {
                                 <img
                                     src="https://cdn.doras.to/doras/assets/05c5db48-cfba-49d7-82a1-5b4a3751aa40/49ca4647-65ed-412e-95c6-c475633d62af.png"
                                     className="size-10"
+                                    alt="doras logo"
                                 />
                                 Powered by Doras.to
                             </h2>

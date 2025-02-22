@@ -1,20 +1,5 @@
-# registry-template
+# TomUI
 
-You can use the `shadcn` CLI to run your own component registry. Running your own
-component registry allows you to distribute your custom components, hooks, pages, and
-other files to any React project.
+TomUI is a custom registry of components built on top of shadcn/ui. It is designed to be used with React projects, expanding the amazing components of shadcn/ui, while also adding a new flavor and features on top.
 
-## Getting Started
-
-This is a template for creating a custom registry using Next.js.
-
-- The template uses a `registry.json` file to define components and their files.
-- The `shadcn build` command is used to build the registry.
-- The registry items are served as static files under `public/r/[name].json`.
-- The template also includes a route handler for serving registry items.
-- Every registry item are compatible with the `shadcn` CLI.
-- We have also added v0 integration using the `Open in v0` api.
-
-## Documentation
-
-Visit the [shadcn documentation](https://ui.shadcn.com/docs/registry) to view the full documentation.
+Getting started is easy. Just simply have a React project with shadcn/ui installed, and then you can install any of our components through shadcn/ui's CLI.

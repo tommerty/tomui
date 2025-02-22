@@ -26,6 +26,16 @@ interface Props {
 export default function Search({ onClick, open, onOpenChange }: Props) {
     const [searchOpen, setSearchOpen] = React.useState(false);
     const router = useRouter();
+    const groupedComponents = components.reduce(
+        (acc, item) => {
+            if (!acc[item.group]) {
+                acc[item.group] = [];
+            }
+            acc[item.group].push(item);
+            return acc;
+        },
+        {} as Record<string, typeof components>
+    );
 
     return (
         <>
@@ -62,12 +72,15 @@ export default function Search({ onClick, open, onOpenChange }: Props) {
                                     {/* @ts-ignore */}
                                     <Icon />
                                     {item.title}
+                                    <p className="ml-auto rounded-md bg-sidebar-accent p-0.5 px-1 text-xs text-muted-foreground">
+                                        {item.group}
+                                    </p>
                                 </CommandItem>
                             );
                         })}
                     </CommandGroup>
                     <CommandSeparator />
-                    <CommandGroup heading="Misc">
+                    <CommandGroup heading="Other Links">
                         <CommandItem
                             onSelect={() => {
                                 setSearchOpen(false);
@@ -80,6 +93,30 @@ export default function Search({ onClick, open, onOpenChange }: Props) {
                         >
                             <tabler.IconBrandGithub />
                             <span>GitHub</span>
+                        </CommandItem>
+                        <CommandItem
+                            onSelect={() => {
+                                setSearchOpen(false);
+                                onOpenChange?.(false);
+                                router.push(
+                                    "https://github.com/tommerty/tomui/issues"
+                                );
+                                onClick?.();
+                            }}
+                        >
+                            <tabler.IconListSearch />
+                            <span>Issues</span>
+                        </CommandItem>
+                        <CommandItem
+                            onSelect={() => {
+                                setSearchOpen(false);
+                                onOpenChange?.(false);
+                                router.push("https://doras.to");
+                                onClick?.();
+                            }}
+                        >
+                            <tabler.IconExternalLink />
+                            <span>Doras.to</span>
                         </CommandItem>
                     </CommandGroup>
                 </CommandList>

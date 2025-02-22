@@ -50,12 +50,18 @@ import {
 import React from "react";
 import { useRouter } from "next/navigation";
 import { ComponentBlockViewer } from "./ComponentBlockViewer";
+import Link from "next/link";
 
 interface Props {
     component: ComponentItem;
     children: React.ReactNode;
+    currentIndex: number;
 }
-export default function ComponentPreview({ children, component }: Props) {
+export default function ComponentPreview({
+    children,
+    component,
+    currentIndex,
+}: Props) {
     const installScript = `pnpm dlx shadcn@latest add https://ui.tommerty.com/r/${component.code}.json`;
     const copyToClipboard = () => {
         navigator.clipboard.writeText(installScript);
@@ -329,13 +335,38 @@ export default function ComponentPreview({ children, component }: Props) {
                         </div>
                     )}
                 </div>
+                <div className="mt-8 flex items-center justify-between border-t p-4">
+                    {currentIndex > 0 ? (
+                        <Button variant="outline" asChild>
+                            <Link
+                                href={`/component/${components[currentIndex - 1].code}`}
+                            >
+                                ← {components[currentIndex - 1].title}
+                            </Link>
+                        </Button>
+                    ) : (
+                        <div />
+                    )}
+
+                    {currentIndex < components.length - 1 ? (
+                        <Button variant="outline" asChild>
+                            <Link
+                                href={`/component/${components[currentIndex + 1].code}`}
+                            >
+                                {components[currentIndex + 1].title} →
+                            </Link>
+                        </Button>
+                    ) : (
+                        <div />
+                    )}
+                </div>
             </div>
             <SidebarProvider
                 name="right-sidebar"
                 className="hidden lg:block"
                 style={{
                     // @ts-ignore
-                    "--sidebar-width": "15rem",
+                    "--sidebar-width": "12rem",
                 }}
             >
                 <Sidebar

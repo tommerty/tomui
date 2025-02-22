@@ -35,49 +35,29 @@ export default function Nav() {
     return (
         <header className="flex w-full items-center gap-2 rounded-md border bg-background/20 p-2 backdrop-blur">
             <Search open={searchOpen} onOpenChange={setSearchOpen} />
-            {isMobile == false ? (
-                <SidebarButton sidebarName="app-sidebar">
-                    <IconLayoutSidebarLeftExpand
-                        className={cn(
-                            "transition-all duration-300",
-                            isOpen ? "rotate-180" : "rotate-0"
-                        )}
+
+            <div className="flex items-center gap-2">
+                <Button
+                    variant={"outline"}
+                    className="flex md:hidden"
+                    onClick={() => router.push("/")}
+                >
+                    <img
+                        src="https://cdn.doras.to/doras/assets/83bda65b-8d42-4011-9bf0-ab23402776f2/b81da5ac-e5be-45c1-b9b1-80b4f51e83af.png"
+                        alt="TomUI"
+                        className="size-4"
                     />
-                </SidebarButton>
-            ) : (
-                <div className="flex items-center gap-2">
-                    <Button
-                        variant={"outline"}
-                        onClick={() => router.push("/")}
-                    >
-                        <img
-                            src="https://cdn.doras.to/doras/assets/83bda65b-8d42-4011-9bf0-ab23402776f2/b81da5ac-e5be-45c1-b9b1-80b4f51e83af.png"
-                            alt="TomUI"
-                            className="size-4"
-                        />
-                        TomUI
-                    </Button>
-                    <Button
-                        variant={"outline"}
-                        className="!h-9 !w-9"
-                        onClick={() => setSearchOpen(true)}
-                    >
-                        <IconMenu />
-                    </Button>
-                </div>
-            )}
-            <Button
-                variant={"outline"}
-                onClick={() => router.push("/")}
-                className={cn(isOpen && "hidden")}
-            >
-                <img
-                    src="https://cdn.doras.to/doras/assets/83bda65b-8d42-4011-9bf0-ab23402776f2/b81da5ac-e5be-45c1-b9b1-80b4f51e83af.png"
-                    alt="TomUI"
-                    className="size-4"
-                />
-                TomUI
-            </Button>
+                    TomUI
+                </Button>
+                <Button
+                    variant={"outline"}
+                    className="flex !h-9 !w-9 md:hidden"
+                    onClick={() => setSearchOpen(true)}
+                >
+                    <IconMenu />
+                </Button>
+            </div>
+
             <Breadcrumbs component={currentComponent} />
 
             <div className="ml-auto flex items-center gap-2">

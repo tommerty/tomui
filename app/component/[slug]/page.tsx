@@ -2,15 +2,6 @@ import { components } from "@/lib/items";
 import ComponentPreview from "@/components/ui/render/ComponentPreview";
 import { notFound } from "next/navigation";
 import type { Metadata, ResolvingMetadata } from "next";
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarGroup,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarProvider,
-} from "@/components/complex-sidebar/complex-sidebar";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -52,15 +43,23 @@ export function generateStaticParams() {
 
 export default async function ComponentPage({ params }: PageProps) {
     const { slug } = await params;
-    const component = components.find((c) => c.code === slug);
+    const currentIndex = components.findIndex((c) => c.code === slug);
+    const component = components[currentIndex];
 
     if (!component) {
         notFound();
     }
 
+    const prevComponent =
+        currentIndex > 0 ? components[currentIndex - 1] : null;
+    const nextComponent =
+        currentIndex < components.length - 1
+            ? components[currentIndex + 1]
+            : null;
+
     return (
         <div className="flex h-full">
-            <ComponentPreview component={component}>
+            <ComponentPreview component={component} currentIndex={currentIndex}>
                 <component.example />
             </ComponentPreview>
         </div>

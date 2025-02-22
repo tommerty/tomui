@@ -40,7 +40,7 @@ export function Breadcrumbs({ component }: BreadcrumbsProps) {
         );
 
     return (
-        <Breadcrumb className="w-fit rounded-md bg-card px-2">
+        <Breadcrumb className="flex h-full w-fit items-center justify-center rounded-md bg-card pl-2 pr-4">
             <BreadcrumbList className="sm:gap-1">
                 <BreadcrumbItem>
                     <BreadcrumbLink href="/">Home</BreadcrumbLink>

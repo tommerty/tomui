@@ -335,7 +335,7 @@ export default function ComponentPreview({ children, component }: Props) {
                 className="hidden lg:block"
                 style={{
                     // @ts-ignore
-                    "--sidebar-width": "15rem",
+                    "--sidebar-width": "12rem",
                 }}
             >
                 <Sidebar

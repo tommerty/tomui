@@ -8,7 +8,7 @@ export default function InspiredBy({
     const hostname = new URL(url).hostname;
     const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
     return (
-        <div className="flex w-fit flex-col py-3">
+        <div className="flex w-fit flex-col">
             <p className="text-sm text-muted-foreground">Inspired by</p>
             <div className="flex items-center gap-2 rounded-md bg-card p-1 text-muted-foreground">
                 <img

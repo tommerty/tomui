@@ -44,14 +44,26 @@ export const InfiniteScrollContent = ({
     />
 );
 
-export type InfiniteScrollItemProps = HTMLAttributes<HTMLDivElement>;
-
+export type InfiniteScrollItemProps = HTMLAttributes<HTMLDivElement> & {
+    zoom?: "none" | "sm" | "md" | "lg";
+};
+const zoomToScale = {
+    none: "",
+    sm: "hover:scale-110",
+    md: "hover:scale-125",
+    lg: "hover:scale-150",
+} as const;
 export const InfiniteScrollItem = ({
     className,
+    zoom = "none",
     ...props
 }: InfiniteScrollItemProps) => (
     <div
-        className={cn("mx-2 flex-shrink-0 object-contain", className)}
+        className={cn(
+            "scale- mx-2 flex-shrink-0 object-contain transition-all duration-150",
+            zoomToScale[zoom as keyof typeof zoomToScale],
+            className
+        )}
         {...props}
     />
 );

@@ -55,13 +55,17 @@ export function InfiniteScrollExample2() {
         () => Math.random() - 0.5
     );
     return (
-        <div className="flex w-full">
+        <div className="flex h-full w-full">
             <InfiniteScroll showFade={false}>
-                <InfiniteScrollContent pauseOnHover={true}>
+                <InfiniteScrollContent
+                    pauseOnHover={true}
+                    className="h-full bg-card"
+                >
                     {randomAvatars.map((num, index) => (
                         <InfiniteScrollItem
                             key={index}
                             className="-mx-3 flex flex-col items-center gap-2 rounded-full border-2 border-red-400 bg-card"
+                            zoom="md"
                         >
                             <img
                                 src={`https://cdn.doras.to/placeholders/headshots/${num}.webp`}

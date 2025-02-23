@@ -36,6 +36,10 @@ export type ComponentItem = {
         description: string;
         exampleComponent: () => JSX.Element;
     }[];
+    req?: {
+        title: string;
+        url: string;
+    }[];
     usage: string;
 };
 export const components: ComponentItem[] = [
@@ -226,6 +230,20 @@ export const components: ComponentItem[] = [
             title: "Kibo UI",
             url: "https://www.kibo-ui.com/components/marquee",
         },
+        req: [
+            {
+                title: "react-fast-marquee",
+                url: "https://www.react-fast-marquee.com/",
+            },
+            {
+                title: "react-fast-marquee",
+                url: "https://www.react-fast-marquee.com/",
+            },
+            {
+                title: "react-fast-marquee",
+                url: "https://www.react-fast-marquee.com/",
+            },
+        ],
         props: [
             {
                 name: "showFade",

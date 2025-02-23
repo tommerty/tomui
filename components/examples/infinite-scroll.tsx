@@ -7,6 +7,15 @@ import {
 } from "@/registry/infinite-scroll/infinite-scroll";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import {
+    AdaptiveModal,
+    AdaptiveModalTrigger,
+    AdaptiveModalContent,
+    AdaptiveModalHeader,
+    AdaptiveModalTitle,
+    AdaptiveModalDescription,
+    AdaptiveModalFooter,
+} from "@/registry/adaptive-modal/components/adaptive-modal";
 
 export default function InfiniteScrollExample() {
     const isMobile = useIsMobile();
@@ -52,7 +61,7 @@ export function InfiniteScrollExample2() {
                     {randomAvatars.map((num, index) => (
                         <InfiniteScrollItem
                             key={index}
-                            className="flex flex-col items-center gap-2"
+                            className="-mx-3 flex flex-col items-center gap-2 rounded-full border-2 border-red-400 bg-card"
                         >
                             <img
                                 src={`https://cdn.doras.to/placeholders/headshots/${num}.webp`}
@@ -64,7 +73,6 @@ export function InfiniteScrollExample2() {
                                 loading="eager"
                                 decoding="async"
                             />
-                            <p>User {num}</p>
                         </InfiniteScrollItem>
                     ))}
                 </InfiniteScrollContent>

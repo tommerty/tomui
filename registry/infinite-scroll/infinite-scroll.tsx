@@ -44,10 +44,6 @@ export const InfiniteScrollContent = ({
     />
 );
 
-export type InfiniteScrollFadeProps = HTMLAttributes<HTMLDivElement> & {
-    side: "left" | "right";
-};
-
 export type InfiniteScrollItemProps = HTMLAttributes<HTMLDivElement>;
 
 export const InfiniteScrollItem = ({

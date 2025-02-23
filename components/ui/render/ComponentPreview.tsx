@@ -51,6 +51,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { ComponentBlockViewer } from "./ComponentBlockViewer";
 import Link from "next/link";
+import InspiredBy from "@/components/InspiredBy";
 
 interface Props {
     component: ComponentItem;
@@ -129,6 +130,12 @@ export default function ComponentPreview({
                     <p className="text-muted-foreground">
                         {component.description}
                     </p>
+                    {component.inspiredBy && (
+                        <InspiredBy
+                            name={component.inspiredBy?.title}
+                            url={component.inspiredBy?.url}
+                        />
+                    )}
                 </header>
                 <div className="flex flex-1 flex-col gap-8">
                     <ComponentBlockViewer exampleName={component.exampleName}>

@@ -8,6 +8,9 @@ import AdaptiveModalExample1 from "@/components/examples/unified-modal-example-1
 import CodeCopyExample, {
     CodeCopyMinimal,
 } from "@/components/examples/code-snippet";
+import InfiniteScrollExample, {
+    InfiniteScrollExample2,
+} from "@/components/examples/infinite-scroll";
 
 export type ComponentItem = {
     title: string;
@@ -16,6 +19,10 @@ export type ComponentItem = {
     example: () => JSX.Element;
     exampleName?: string;
     description: string;
+    inspiredBy?: {
+        title: string;
+        url: string;
+    };
     code: string;
     props?: {
         name: string;
@@ -205,5 +212,78 @@ export const components: ComponentItem[] = [
       code="git clone https://github.com/shadcn/ui.git"
       variant="minimal"
     />`,
+    },
+    {
+        title: "Infinite Sroll",
+        group: "Marketing",
+        iconName: "IconCode",
+        example: InfiniteScrollExample,
+        exampleName: "Infinite Scroll",
+        description:
+            "A simple infinite scrolling component for displaying long lists of content. Useful for landing pages showing off supporters or companies using your product.",
+        code: "infinite-scroll",
+        inspiredBy: {
+            title: "Kibo UI",
+            url: "https://www.kibo-ui.com/components/marquee",
+        },
+        props: [
+            {
+                name: "showFade",
+                type: "boolean",
+                default: "true",
+                description:
+                    "Shows gradient fade effect on the edges of the scroll",
+            },
+            {
+                name: "loop",
+                type: "number",
+                default: "0",
+                description:
+                    "Number of times to loop the content (0 for infinite)",
+            },
+            {
+                name: "autoFill",
+                type: "boolean",
+                default: "false",
+                description:
+                    "Automatically fills the empty space by duplicating children",
+            },
+            {
+                name: "pauseOnHover",
+                type: "boolean",
+                default: "false",
+                description:
+                    "Pauses the animation when hovering over the content",
+            },
+            {
+                name: "className",
+                type: "string",
+                description: "Additional classes for styling",
+            },
+        ],
+        alternativeExamples: [
+            {
+                title: "No fade & pause",
+                description:
+                    "No fade effect on the edges of the scroll and also having it stop on hover",
+                exampleComponent: InfiniteScrollExample2,
+            },
+        ],
+        usage: `import { InfiniteScroll, InfiniteScrollContent, InfiniteScrollItem } from "@/components/tomui/infinite-scroll";
+
+<InfiniteScroll>
+    <InfiniteScrollContent pauseOnHover>
+        {items.map((item, index) => (
+            <InfiniteScrollItem key={index} className="flex items-center gap-2">
+                <img 
+                    src={item.image} 
+                    alt={item.name}
+                    className="size-24 rounded-full"
+                />
+                <span>{item.name}</span>
+            </InfiniteScrollItem>
+        ))}
+    </InfiniteScrollContent>
+</InfiniteScroll>`,
     },
 ];

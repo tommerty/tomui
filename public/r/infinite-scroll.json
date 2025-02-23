@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "infinite-scroll",
+  "type": "registry:component",
+  "title": "Infinite Scroll",
+  "description": "A simple infinite scrolling component for displaying long lists of content. Useful for landing pages showing off supporters or companies using your product.",
+  "registryDependencies": [
+    "react-fast-marquee"
+  ],
+  "files": [
+    {
+      "path": "registry/infinite-scroll/infinite-scroll.tsx",
+      "content": "\"use client\";\n\nimport { cn } from \"@/lib/utils\";\nimport type { HTMLAttributes } from \"react\";\nimport FastMarquee from \"react-fast-marquee\";\nimport type { MarqueeProps as ScrollProps } from \"react-fast-marquee\";\n\nexport type MarqueeProps = HTMLAttributes<HTMLDivElement>;\n\nexport const InfiniteScroll = ({ className, ...props }: ScrollProps) => (\n    <div\n        className={cn(\"relative w-full overflow-hidden\", className)}\n        {...props}\n    />\n);\n\nexport type InfiniteScrollContentProps = ScrollProps;\n\nexport const InfiniteScrollContent = ({\n    loop = 0,\n    autoFill = false,\n    pauseOnHover = false,\n    ...props\n}: InfiniteScrollContentProps) => (\n    <FastMarquee\n        loop={loop}\n        autoFill={autoFill}\n        pauseOnHover={pauseOnHover}\n        {...props}\n    />\n);\n\nexport type InfiniteScrollFadeProps = HTMLAttributes<HTMLDivElement> & {\n    side: \"left\" | \"right\";\n};\n\nexport const InfiniteScrollFade = ({\n    className,\n    side,\n    ...props\n}: InfiniteScrollFadeProps) => (\n    <div\n        className={cn(\n            \"absolute bottom-0 top-0 z-10 h-full w-24 from-background to-transparent\",\n            side === \"left\"\n                ? \"left-0 bg-gradient-to-r\"\n                : \"right-0 bg-gradient-to-l\",\n            className\n        )}\n        {...props}\n    />\n);\n\nexport type InfiniteScrollItemProps = HTMLAttributes<HTMLDivElement>;\n\nexport const InfiniteScrollItem = ({\n    className,\n    ...props\n}: InfiniteScrollItemProps) => (\n    <div\n        className={cn(\"mx-2 flex-shrink-0 object-contain\", className)}\n        {...props}\n    />\n);\n",
+      "type": "registry:component",
+      "target": "components/tomui/infinite-scroll.tsx"
+    }
+  ]
+}

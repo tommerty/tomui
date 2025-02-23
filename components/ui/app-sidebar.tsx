@@ -122,11 +122,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                     ([groupName, items]) => (
                                         <Collapsible
                                             key={groupName}
-                                            defaultOpen={items.some(
-                                                (item) =>
-                                                    pathname ===
-                                                    `/component/${item.code}`
-                                            )}
+                                            defaultOpen
                                             className="group/collapsible transition-all duration-200"
                                         >
                                             <SidebarMenuItem>

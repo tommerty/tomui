@@ -214,7 +214,7 @@ export const components: ComponentItem[] = [
     />`,
     },
     {
-        title: "Infinite Sroll",
+        title: "Infinite Scroll",
         group: "Marketing",
         iconName: "IconCode",
         example: InfiniteScrollExample,

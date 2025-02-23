@@ -12,7 +12,8 @@
             "files": [
                 {
                     "path": "registry/adaptive-modal/components/adaptive-modal.tsx",
-                    "type": "registry:component"
+                    "type": "registry:component",
+                    "target": "components/tomui/adaptive.modal.tsx"
                 },
                 {
                     "path": "registry/adaptive-modal/hooks/use-mobile.tsx",
@@ -29,7 +30,8 @@
             "files": [
                 {
                     "path": "registry/code-snippet/code-snippet.tsx",
-                    "type": "registry:component"
+                    "type": "registry:component",
+                    "target": "components/tomui/code-snippet.tsx"
                 }
             ]
         }

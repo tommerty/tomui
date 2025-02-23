@@ -34,6 +34,20 @@
                     "target": "components/tomui/code-snippet.tsx"
                 }
             ]
+        },
+        {
+            "name": "infinite-scroll",
+            "type": "registry:component",
+            "title": "Infinite Scroll",
+            "description": "A simple infinite scrolling component for displaying long lists of content. Useful for landing pages showing off supporters or companies using your product.",
+            "registryDependencies": ["react-fast-marquee"],
+            "files": [
+                {
+                    "path": "registry/infinite-scroll/infinite-scroll.tsx",
+                    "type": "registry:component",
+                    "target": "components/tomui/infinite-scroll.tsx"
+                }
+            ]
         }
     ]
 }

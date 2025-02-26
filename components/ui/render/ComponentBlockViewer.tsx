@@ -1,14 +1,16 @@
 "use client";
 
 import * as React from "react";
-
+import { Highlight, themes } from "prism-react-renderer";
 import { ToggleGroup, ToggleGroupItem } from "../toggle-group";
 import { Label } from "../label";
 import {
+    IconCode,
     IconDeviceDesktop,
     IconDeviceMobile,
     IconDeviceTablet,
 } from "@tabler/icons-react";
+import { Separator } from "../separator";
 
 // Create a context to provide the mocked mobile state
 export const ViewportContext = React.createContext<{
@@ -26,19 +28,29 @@ export function useViewport() {
 interface ComponentBlockViewerProps {
     children: React.ReactNode;
     exampleName?: string;
+    code?: string;
 }
 
 export function ComponentBlockViewer({
     children,
     exampleName,
+    code,
 }: ComponentBlockViewerProps) {
-    const [width, setWidth] = React.useState<number>(100);
+    const [viewMode, setViewMode] = React.useState<string>("100"); // Track the current view mode
     const [isMobile, setIsMobile] = React.useState(false);
     const previewRef = React.useRef<HTMLDivElement>(null);
 
     const handleViewportChange = (value: string) => {
+        if (!value) return; // Guard against empty value
+
+        setViewMode(value); // Update the current view mode
+
+        if (value === "code") {
+            setIsMobile(false);
+            return;
+        }
+
         const newWidth = parseInt(value);
-        setWidth(newWidth);
         setIsMobile(newWidth === 30);
 
         if (previewRef.current) {
@@ -53,6 +65,9 @@ export function ComponentBlockViewer({
         }
     };
 
+    // Determine if we should show code or preview
+    const showCode = viewMode === "code";
+
     return (
         <ViewportContext.Provider value={{ isMobile, setIsMobile }}>
             <div className="flex flex-col gap-2 rounded-md border p-2">
@@ -63,7 +78,7 @@ export function ComponentBlockViewer({
                     <div className="ml-auto flex items-center gap-1.5 rounded-md border p-1">
                         <ToggleGroup
                             type="single"
-                            value={width.toString()}
+                            value={viewMode} // Use the viewMode state
                             onValueChange={handleViewportChange}
                         >
                             <ToggleGroupItem
@@ -87,6 +102,21 @@ export function ComponentBlockViewer({
                             >
                                 <IconDeviceMobile />
                             </ToggleGroupItem>
+                            {code && (
+                                <>
+                                    <Separator
+                                        orientation="vertical"
+                                        className="!h-6"
+                                    />
+                                    <ToggleGroupItem
+                                        value="code"
+                                        className="!size-9 !p-1"
+                                        title="Code"
+                                    >
+                                        <IconCode />
+                                    </ToggleGroupItem>
+                                </>
+                            )}
                         </ToggleGroup>
                     </div>
                 </div>
@@ -96,12 +126,51 @@ export function ComponentBlockViewer({
                         contain: "paint, layout, size",
                     }}
                 >
-                    <div
-                        ref={previewRef}
-                        className="flex h-full w-full place-content-center items-center rounded-md border p-3 transition-all duration-200"
-                    >
-                        {children}
-                    </div>
+                    {showCode ? (
+                        <div className="w-full overflow-auto rounded-md border">
+                            <Highlight
+                                theme={themes.vsDark}
+                                code={code || "// No code available"}
+                                language="tsx"
+                            >
+                                {({
+                                    className,
+                                    style,
+                                    tokens,
+                                    getLineProps,
+                                    getTokenProps,
+                                }) => (
+                                    <pre
+                                        className={`${className} h-full overflow-auto !bg-transparent p-4 text-xs !text-foreground`}
+                                        style={style}
+                                    >
+                                        {tokens.map((line, i) => (
+                                            <div
+                                                key={i}
+                                                {...getLineProps({ line })}
+                                            >
+                                                {line.map((token, key) => (
+                                                    <span
+                                                        key={key}
+                                                        {...getTokenProps({
+                                                            token,
+                                                        })}
+                                                    />
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </pre>
+                                )}
+                            </Highlight>
+                        </div>
+                    ) : (
+                        <div
+                            ref={previewRef}
+                            className="flex h-full w-full place-content-center items-center rounded-md border p-3 transition-all duration-200"
+                        >
+                            {children}
+                        </div>
+                    )}
                 </div>
             </div>
         </ViewportContext.Provider>

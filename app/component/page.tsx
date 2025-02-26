@@ -2,7 +2,10 @@ import { components } from "@/lib/items";
 import Link from "next/link";
 import * as tabler from "@tabler/icons-react";
 
-export default function ComponentsPage() {
+interface PageProps {
+    searchParams: { group?: string };
+}
+export default function ComponentsPage({ searchParams }: PageProps) {
     const groupedComponents = components.reduce(
         (acc, item) => {
             const group = item.group || "Other";
@@ -18,7 +21,11 @@ export default function ComponentsPage() {
         <div className="px-4 py-8">
             <h1 className="mb-8 text-3xl font-bold">Components</h1>
             {Object.entries(groupedComponents).map(([groupName, items]) => (
-                <div key={groupName} className="mb-12">
+                <div
+                    key={groupName}
+                    className="mb-12"
+                    id={groupName.toLowerCase().replace(/\s+/g, "-")}
+                >
                     <h2 className="mb-2 text-xl font-semibold text-foreground">
                         {groupName}
                     </h2>
@@ -30,7 +37,7 @@ export default function ComponentsPage() {
                                 <Link
                                     key={item.code}
                                     href={`/component/${item.code}`}
-                                    className="rounded-md border border-border/50 p-6 transition-colors hover:border-border hover:bg-card"
+                                    className="rounded-md border border-border/50 bg-card p-6 transition-colors hover:border-border hover:bg-card/70"
                                 >
                                     <div className="flex items-center gap-2">
                                         {/* @ts-ignore */}

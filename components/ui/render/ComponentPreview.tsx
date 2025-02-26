@@ -142,7 +142,10 @@ export default function ComponentPreview({
                     </div>
                 </header>
                 <div className="flex flex-1 flex-col gap-8">
-                    <ComponentBlockViewer exampleName={component.exampleName}>
+                    <ComponentBlockViewer
+                        exampleName={component.exampleName}
+                        code={component.usage}
+                    >
                         {children}
                     </ComponentBlockViewer>
                     <div className="flex flex-col gap-4">
@@ -381,7 +384,7 @@ export default function ComponentPreview({
                 }}
             >
                 <Sidebar
-                    className="border-none pl-0"
+                    className="border-none bg-transparent pl-0"
                     side="right"
                     absolute
                     collapsible="none"

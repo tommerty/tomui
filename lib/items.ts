@@ -11,6 +11,11 @@ import CodeCopyExample, {
 import InfiniteScrollExample, {
     InfiniteScrollExample2,
 } from "@/components/examples/infinite-scroll";
+import CallToActionExample, {
+    CallToActionBanner,
+    CallToActionHighlight,
+    CallToActionMinimal,
+} from "@/components/examples/call-to-action";
 
 export type ComponentItem = {
     title: string;
@@ -35,6 +40,7 @@ export type ComponentItem = {
         title: string;
         description: string;
         exampleComponent: () => JSX.Element;
+        code?: string;
     }[];
     req?: {
         title: string;
@@ -220,7 +226,7 @@ export const components: ComponentItem[] = [
     {
         title: "Infinite Scroll",
         group: "Marketing",
-        iconName: "IconCode",
+        iconName: "IconKeyframes",
         example: InfiniteScrollExample,
         exampleName: "Infinite Scroll",
         description:
@@ -231,14 +237,6 @@ export const components: ComponentItem[] = [
             url: "https://www.kibo-ui.com/components/marquee",
         },
         req: [
-            {
-                title: "react-fast-marquee",
-                url: "https://www.react-fast-marquee.com/",
-            },
-            {
-                title: "react-fast-marquee",
-                url: "https://www.react-fast-marquee.com/",
-            },
             {
                 title: "react-fast-marquee",
                 url: "https://www.react-fast-marquee.com/",
@@ -303,5 +301,105 @@ export const components: ComponentItem[] = [
         ))}
     </InfiniteScrollContent>
 </InfiniteScroll>`,
+    },
+    {
+        title: "Call To Action",
+        group: "Marketing",
+        iconName: "IconHeartStar",
+        example: CallToActionExample,
+        exampleName: "Call To Action",
+        description:
+            "A versatile Call To Action component with multiple variants for creating engaging sections. Perfect for marketing pages, hero sections, and promotional content.",
+        code: "call-to-action",
+        props: [
+            {
+                name: "variant",
+                type: '"default" | "highlight" | "centered" | "banner" | "minimal"',
+                default: "default",
+                description: "Controls the visual style of the CTA",
+            },
+            {
+                name: "size",
+                type: '"default" | "sm" | "lg"',
+                default: "default",
+                description: "Sets the size and padding of the CTA",
+            },
+        ],
+        alternativeExamples: [
+            {
+                title: "Highlight",
+                description: "A highlighted version with primary color accents",
+                exampleComponent: CallToActionHighlight,
+                code: `<CallToAction variant="highlight">
+    <CallToActionContent>
+        <CallToActionTitle>Try Premium Features</CallToActionTitle>
+        <CallToActionDescription>
+            Get access to all premium components and features with our
+            Pro plan.
+        </CallToActionDescription>
+        <CallToActionAction>
+            <Button variant="default">Upgrade Now</Button>
+        </CallToActionAction>
+    </CallToActionContent>
+</CallToAction>`,
+            },
+            {
+                title: "Banner",
+                description: "Full-width banner style with responsive layout",
+                exampleComponent: CallToActionBanner,
+                code: `<CallToAction variant="banner">
+    <CallToActionContent>
+        <CallToActionTitle>Update</CallToActionTitle>
+        <CallToActionAction>
+            <Button variant="outline" size={"sm"}>
+                New UI and more
+            </Button>
+        </CallToActionAction>
+    </CallToActionContent>
+</CallToAction>`,
+            },
+            {
+                title: "Minimal",
+                description: "A minimal style with a subtle background",
+                exampleComponent: CallToActionMinimal,
+                code: `<CallToAction variant="minimal">
+    <CallToActionContent>
+        <CallToActionTitle>Join Our Newsletter</CallToActionTitle>
+        <CallToActionDescription>
+            Stay updated with our latest components and features.
+        </CallToActionDescription>
+        <CallToActionAction>
+            <Button variant="outline">Subscribe</Button>
+        </CallToActionAction>
+    </CallToActionContent>
+</CallToAction>`,
+            },
+        ],
+        usage: `<CallToAction>
+    <CallToActionContent>
+        <CallToActionTitle>
+            The ultimate tool for creators
+        </CallToActionTitle>
+        <CallToActionDescription>
+            Enhance how your audience engages with your content. Create
+            a link in bio, blog, forms, and more.
+        </CallToActionDescription>
+        <CallToActionAction>
+            <Button size="lg" className="font-bold">
+                Get Started
+            </Button>
+         </CallToActionAction>
+    </CallToActionContent>
+    <CallToActionMedia>
+        <div className="relative h-36 w-36">
+            <Image
+                src="..."
+                alt="Preview"
+                fill
+                className="object-cover"
+                />
+        </div>
+    </CallToActionMedia>
+</CallToAction>`,
     },
 ];

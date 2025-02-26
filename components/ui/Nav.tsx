@@ -33,7 +33,7 @@ export default function Nav() {
         : undefined;
 
     return (
-        <header className="flex w-full items-center gap-2 rounded-md border bg-background/20 p-2 backdrop-blur">
+        <header className="flex w-full items-center gap-2 rounded-md border bg-sidebar p-2 backdrop-blur">
             <Search open={searchOpen} onOpenChange={setSearchOpen} />
 
             <div className="flex items-center gap-2">
@@ -69,7 +69,13 @@ export default function Nav() {
                     <IconSearch />
                     Search...
                 </Button>
-                <Button variant={"outline"} className="!h-9 !w-9">
+                <Button
+                    variant={"outline"}
+                    className="!h-9 !w-9"
+                    onClick={() =>
+                        router.push("https://github.com/tommerty/tomui")
+                    }
+                >
                     <IconBrandGithub />
                 </Button>
             </div>

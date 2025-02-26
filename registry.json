@@ -48,6 +48,19 @@
                     "target": "components/tomui/infinite-scroll.tsx"
                 }
             ]
+        },
+        {
+            "name": "call-to-action",
+            "type": "registry:component",
+            "title": "Call to Action",
+            "description": "A versatile call-to-action component with multiple variants including default, highlight, centered, banner, and minimal styles for promoting user engagement.",
+            "files": [
+                {
+                    "path": "registry/call-to-action/components/call-to-action.tsx",
+                    "type": "registry:component",
+                    "target": "components/tomui/call-to-action.tsx"
+                }
+            ]
         }
     ]
 }

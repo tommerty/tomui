@@ -26,10 +26,10 @@ export function Breadcrumbs({ component }: BreadcrumbsProps) {
         return (
             <Breadcrumb className="flex h-full w-fit items-center justify-center rounded-md bg-card pl-2 pr-4">
                 <BreadcrumbList className="sm:gap-1">
-                    <BreadcrumbItem>
+                    <BreadcrumbItem className="hidden sm:flex">
                         <BreadcrumbLink href="/">Home</BreadcrumbLink>
                     </BreadcrumbItem>
-                    <BreadcrumbSeparator>
+                    <BreadcrumbSeparator className="hidden sm:flex">
                         <IconSlash size={16} />
                     </BreadcrumbSeparator>
                     <BreadcrumbItem>
@@ -42,10 +42,10 @@ export function Breadcrumbs({ component }: BreadcrumbsProps) {
     return (
         <Breadcrumb className="flex h-full w-fit items-center justify-center rounded-md bg-card pl-2 pr-4">
             <BreadcrumbList className="sm:gap-1">
-                <BreadcrumbItem>
+                <BreadcrumbItem className="hidden sm:flex">
                     <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator>
+                <BreadcrumbSeparator className="hidden sm:flex">
                     <IconSlash size={16} />
                 </BreadcrumbSeparator>
                 <BreadcrumbItem>

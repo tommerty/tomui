@@ -2,10 +2,7 @@ import { components } from "@/lib/items";
 import Link from "next/link";
 import * as tabler from "@tabler/icons-react";
 
-interface PageProps {
-    searchParams: { group?: string };
-}
-export default function ComponentsPage({ searchParams }: PageProps) {
+export default function ComponentsPage() {
     const groupedComponents = components.reduce(
         (acc, item) => {
             const group = item.group || "Other";

@@ -121,7 +121,7 @@ export function ComponentBlockViewer({
                     </div>
                 </div>
                 <div
-                    className="relative flex h-72 max-h-96"
+                    className="relative flex h-96 w-full md:h-[60dvh]"
                     style={{
                         contain: "paint, layout, size",
                     }}

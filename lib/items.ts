@@ -16,6 +16,7 @@ import CallToActionExample, {
     CallToActionHighlight,
     CallToActionMinimal,
 } from "@/components/examples/call-to-action";
+import { FAQExample } from "@/components/examples/faq";
 
 export type ComponentItem = {
     title: string;
@@ -401,5 +402,84 @@ export const components: ComponentItem[] = [
         </div>
     </CallToActionMedia>
 </CallToAction>`,
+    },
+    {
+        title: "FAQ",
+        group: "Marketing",
+        iconName: "IconQuestionMark",
+        example: FAQExample,
+        exampleName: "FAQ",
+        props: [
+            {
+                name: "faq",
+                type: "FAQTypes[]",
+                default: "[]",
+                description: "Array of FAQ items",
+            },
+            {
+                name: "title",
+                type: "string",
+                default: "undefined",
+                description: "The title of the FAQ section",
+            },
+            // Properties inside each FAQTypes item
+            {
+                name: "faq[].question",
+                type: "string",
+                required: true,
+                description: "The question text to display in the FAQ item",
+            },
+            {
+                name: "faq[].answer",
+                type: "string",
+                required: true,
+                description: "The answer text for the FAQ item",
+            },
+            {
+                name: "faq[].category",
+                type: "string",
+                default: "Uncategorized",
+                description: "Optional category to group FAQ items",
+            },
+            {
+                name: "faq[].footer",
+                type: "React.ReactNode",
+                description:
+                    "Optional additional content to display below the answer, such as links or buttons",
+            },
+        ],
+
+        description:
+            "A styled accordion, based off the shadcn/ui accordion component. Provides a customizable FAQ component for answering common questions and providing support. Supports categories, collapsible items, and responsive design.",
+        code: "faq",
+        usage: `// Define your FAQ items
+    const faqItems: FAQTypes[] = [
+      {
+        question: "What is this product?",
+        category: "General",
+        answer: "This is a fantastic product that solves all your problems.",
+      },
+      {
+        question: "How much does it cost?",
+        category: "Pricing",
+        answer: "Our pricing starts at $9.99 per month with a free tier available.",
+      },
+      {
+        question: "Do you offer support?",
+        category: "Support",
+        answer: "Yes, we offer 24/7 support for all paid plans.",
+        footer: (
+          <a href="#" className="text-primary hover:underline">
+            Contact our support team
+          </a>
+        ),
+      },
+    ];
+    
+    // Use the FAQ component
+    <FAQ 
+      faq={faqItems} 
+      title="Frequently Asked Questions" 
+    />`,
     },
 ];

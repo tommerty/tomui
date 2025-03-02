@@ -61,6 +61,20 @@
                     "target": "components/tomui/call-to-action.tsx"
                 }
             ]
+        },
+        {
+            "name": "faq",
+            "type": "registry:component",
+            "title": "FAQ",
+            "description": "A styled accordion, based off the shadcn/ui accordion component. Provides a customizable FAQ component for answering common questions and providing support. Supports categories, collapsible items, and responsive design.",
+            "registryDependencies": ["accordion", "label"],
+            "files": [
+                {
+                    "path": "registry/faq/components/faq.tsx",
+                    "type": "registry:component",
+                    "target": "components/tomui/faq.tsx"
+                }
+            ]
         }
     ]
 }

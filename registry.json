@@ -26,7 +26,8 @@
             "type": "registry:component",
             "title": "Code Snippet",
             "description": "A simple component to display a code snippet with a copy button, and multiple language options via tabs",
-            "registryDependencies": ["tabs", "button", "prism-react-renderer"],
+            "registryDependencies": ["tabs", "button"],
+            "dependencies": ["prism-react-renderer"],
             "files": [
                 {
                     "path": "registry/code-snippet/code-snippet.tsx",
@@ -40,7 +41,7 @@
             "type": "registry:component",
             "title": "Infinite Scroll",
             "description": "A simple infinite scrolling component for displaying long lists of content. Useful for landing pages showing off supporters or companies using your product.",
-            "registryDependencies": ["react-fast-marquee"],
+            "dependencies": ["react-fast-marquee"],
             "files": [
                 {
                     "path": "registry/infinite-scroll/infinite-scroll.tsx",

@@ -4,10 +4,12 @@
   "type": "registry:component",
   "title": "Code Snippet",
   "description": "A simple component to display a code snippet with a copy button, and multiple language options via tabs",
+  "dependencies": [
+    "prism-react-renderer"
+  ],
   "registryDependencies": [
     "tabs",
-    "button",
-    "prism-react-renderer"
+    "button"
   ],
   "files": [
     {

@@ -8,14 +8,71 @@ on:
             - "**/**.md"
             - "LICENSE"
             - ".github/**"
+    pull_request:
+        branches:
+            - main
 
 jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-24.04-arm
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+            packages: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+
+            - name: Cache pnpm modules
+              uses: actions/cache@v3
+              with:
+                  path: |
+                      ~/.pnpm-store
+                      node_modules
+                      .next/cache
+                  key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-
+
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 8
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Semantic Release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: npx semantic-release
+
     docker:
+        needs: release
         runs-on: ubuntu-24.04-arm
         timeout-minutes: 30
+        permissions:
+            contents: read
+            packages: write
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Read version from package.json
+              id: package-version
+              run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
             - name: Setup Node.js
               uses: actions/setup-node@v4
@@ -49,7 +106,9 @@ jobs:
                   context: .
                   platforms: linux/arm64
                   push: true
-                  tags: ghcr.io/${{ github.repository_owner }}/ui:latest
+                  tags: |
+                      ghcr.io/${{ github.repository_owner }}/ui:latest
+                      ghcr.io/${{ github.repository_owner }}/ui:v${{ steps.package-version.outputs.VERSION }}
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
 

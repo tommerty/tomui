@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/tommerty/tomui/compare/v1.0.0...v1.0.1) (2025-03-15)
+
+
+### Bug Fixes
+
+* Adds changelog automated from deployments, unifies the layout into one single layout, and installs multiple dependencies to make it all work ([b1a8e30](https://github.com/tommerty/tomui/commit/b1a8e306e06e0e2daa46d8b4d9245d452484fc68))
+
 # 1.0.0 (2025-03-15)
 
 

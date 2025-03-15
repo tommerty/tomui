@@ -16,12 +16,18 @@ import {
     DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { IconChevronRight, IconSlash } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
 
 interface BreadcrumbsProps {
     component?: ComponentItem;
 }
 
 export function Breadcrumbs({ component }: BreadcrumbsProps) {
+    const pathname = usePathname();
+    const homepage = pathname === "/";
+
+    const formattedPathname = pathname.split("/").pop();
+
     if (!component)
         return (
             <Breadcrumb className="flex h-full w-fit items-center justify-center rounded-md bg-card pl-2 pr-4">
@@ -29,12 +35,18 @@ export function Breadcrumbs({ component }: BreadcrumbsProps) {
                     <BreadcrumbItem className="hidden sm:flex">
                         <BreadcrumbLink href="/">Home</BreadcrumbLink>
                     </BreadcrumbItem>
-                    <BreadcrumbSeparator className="hidden sm:flex">
-                        <IconSlash size={16} />
-                    </BreadcrumbSeparator>
-                    <BreadcrumbItem>
-                        <BreadcrumbPage>Components</BreadcrumbPage>
-                    </BreadcrumbItem>
+                    {!homepage && (
+                        <>
+                            <BreadcrumbSeparator className="hidden sm:flex">
+                                <IconSlash size={16} />
+                            </BreadcrumbSeparator>
+                            <BreadcrumbItem>
+                                <BreadcrumbPage className="capitalize">
+                                    {formattedPathname}
+                                </BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </>
+                    )}
                 </BreadcrumbList>
             </Breadcrumb>
         );

@@ -100,6 +100,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             open={searchOpen}
                             onOpenChange={setSearchOpen}
                         />
+                        <SidebarMenuItem>
+                            <SidebarMenuButton
+                                isActive={pathname === "/changelog"}
+                                onClick={() => router.push("/changelog")}
+                            >
+                                <tabler.IconHistory />
+                                Changelog
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
                     </SidebarMenu>
                 </SidebarHeader>
                 <SidebarContent className="md:max-h-[50dvh]">
@@ -185,11 +194,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                         </Collapsible>
                                     )
                                 )}
+                                <SidebarSeparator />
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
                     {/* ))} */}
-                    <SidebarSeparator />
                 </SidebarContent>
                 <SidebarFooter>
                     <SidebarMenu className="rounded-md border-sidebar-border bg-sidebar-accent p-2">

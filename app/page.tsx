@@ -25,7 +25,7 @@ import {
 
 export default function Home() {
     return (
-        <div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-4 py-8">
+        <div className="mx-auto flex max-w-3xl flex-col gap-8 px-4 py-8">
             <div className="flex flex-1 flex-col gap-8">
                 <div className="flex flex-col gap-3 rounded-md border bg-card p-3">
                     <h2 className="flex w-fit items-center gap-2 rounded-md bg-accent p-2 text-xl font-bold tracking-tight">

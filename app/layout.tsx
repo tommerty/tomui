@@ -11,6 +11,7 @@ import { AppSidebar } from "@/components/ui/app-sidebar";
 import MobileNav from "@/components/MobileNav";
 import { Suspense } from "react";
 import Loading from "./loading";
+import Nav from "@/components/ui/Nav";
 
 export const metadata: Metadata = {
     title: {
@@ -32,7 +33,18 @@ export default function RootLayout({
         <html lang="en">
             <body className={`dark antialiased`}>
                 <div className="relative mx-auto w-full max-w-screen-2xl">
-                    {children}
+                    <div className="flex h-dvh">
+                        <Suspense fallback={<Loading />}>
+                            <AppSidebar absolute />
+
+                            <main className="mt-2 flex flex-1 flex-col overflow-hidden px-2">
+                                <Nav />
+                                <div className="flex-1 overflow-auto">
+                                    {children}
+                                </div>
+                            </main>
+                        </Suspense>
+                    </div>
                 </div>
             </body>
         </html>

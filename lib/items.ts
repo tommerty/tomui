@@ -18,6 +18,7 @@ import CallToActionExample, {
 } from "@/components/examples/call-to-action";
 import { FAQExample } from "@/components/examples/faq";
 import { RootLayoutClient } from "@/components/examples/sidebar/root";
+import { RootLayoutClient2 } from "@/components/examples/sidebar/root2";
 
 export type ComponentItem = {
     title: string;
@@ -565,5 +566,12 @@ export const components: ComponentItem[] = [
       faq={faqItems} 
       title="Frequently Asked Questions" 
     />`,
+        alternativeExamples: [
+            {
+                title: "Highlight",
+                description: "A highlighted version with primary color accents",
+                exampleComponent: RootLayoutClient2,
+            },
+        ],
     },
 ];

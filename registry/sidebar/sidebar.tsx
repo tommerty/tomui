@@ -37,6 +37,8 @@ interface SidebarProps
     children: React.ReactNode;
     collapsible?: boolean; // Add new collapsible prop
     theme?: SidebarTheme; // Add theme prop
+    collapsedWidth?: string; // New prop for collapsed width
+    expandedWidth?: string; // New prop for expanded width
 }
 
 const SIDEBAR_COLLAPSED_PREFIX = "sidebar-collapsed";
@@ -89,6 +91,8 @@ export function Sidebar({
     collapsible = true, // Default to true for backward compatibility
     sidebarContent: controlledContent,
     onContentChange,
+    collapsedWidth = "w-16", // Default to current value
+    expandedWidth = "w-64", // Default to current value
     ...props
 }: SidebarProps) {
     const cookieName = getSidebarCookieName(name);
@@ -153,11 +157,11 @@ export function Sidebar({
                     "relative flex h-full flex-none flex-col overflow-x-hidden transition-all duration-300 ease-in-out",
                     variant === "default"
                         ? collapsed
-                            ? "w-16"
-                            : "w-64"
+                            ? collapsedWidth
+                            : expandedWidth
                         : collapsed
                           ? "w-0"
-                          : "w-64",
+                          : expandedWidth,
                     position === "right" ? "border-l" : "border-r",
                     variant === "hidden" && collapsed && "border-0",
                     theme === "default" && "",

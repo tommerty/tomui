@@ -497,76 +497,129 @@ export const components: ComponentItem[] = [
         },
         props: [
             {
-                name: "faq",
-                type: "FAQTypes[]",
-                default: "[]",
-                description: "Array of FAQ items",
+                name: "collapsed",
+                type: "boolean",
+                description: "Controls whether the sidebar is collapsed",
             },
             {
-                name: "title",
-                type: "string",
-                default: "undefined",
-                description: "The title of the FAQ section",
-            },
-            // Properties inside each FAQTypes item
-            {
-                name: "faq[].question",
-                type: "string",
-                required: true,
-                description: "The question text to display in the FAQ item",
-            },
-            {
-                name: "faq[].answer",
-                type: "string",
-                required: true,
-                description: "The answer text for the FAQ item",
-            },
-            {
-                name: "faq[].category",
-                type: "string",
-                default: "Uncategorized",
-                description: "Optional category to group FAQ items",
-            },
-            {
-                name: "faq[].footer",
-                type: "React.ReactNode",
+                name: "onCollapse",
+                type: "(collapsed: boolean) => void",
                 description:
-                    "Optional additional content to display below the answer, such as links or buttons",
+                    "Callback function when sidebar collapse state changes",
+            },
+            {
+                name: "position",
+                type: '"left" | "right"',
+                default: "left",
+                description: "Position of the sidebar relative to the content",
+            },
+            {
+                name: "defaultCollapsed",
+                type: "boolean",
+                default: "false",
+                description: "Initial collapsed state of the sidebar",
+            },
+            {
+                name: "name",
+                type: "string",
+                default: "default",
+                description:
+                    "Unique identifier for the sidebar, used for storing collapse state in cookies",
+            },
+            {
+                name: "variant",
+                type: '"default" | "hidden"',
+                default: "default",
+                description: "Controls visibility behavior when collapsed",
+            },
+            {
+                name: "theme",
+                type: '"default" | "card"',
+                default: "default",
+                description: "Visual theme of the sidebar",
+            },
+            {
+                name: "collapsible",
+                type: "boolean",
+                default: "true",
+                description: "Whether the sidebar can be collapsed by the user",
+            },
+            {
+                name: "sidebarContent",
+                type: "SidebarContentType",
+                description:
+                    "Content to be displayed in the sidebar, can be used for dynamic content",
+            },
+            {
+                name: "onContentChange",
+                type: "(content: SidebarContentType) => void",
+                description: "Callback function when sidebar content changes",
+            },
+            {
+                name: "collapsedWidth",
+                type: "string",
+                default: "w-16",
+                description:
+                    "Width of the sidebar when collapsed (Tailwind class)",
+            },
+            {
+                name: "expandedWidth",
+                type: "string",
+                default: "w-64",
+                description:
+                    "Width of the sidebar when expanded (Tailwind class)",
+            },
+            {
+                name: "className",
+                type: "string",
+                description: "Additional CSS classes to apply to the sidebar",
+            },
+            {
+                name: "children",
+                type: "React.ReactNode",
+                required: true,
+                description: "Content to be rendered inside the sidebar",
             },
         ],
 
         description:
             "While I love shad's sidebar component and the power it provides, looking in the issues and discussions on the repository some things start to emerge. Mostly, it's difficult to implement multiple sidebars, on different sections or nested within your application. TomUI Sidebar is a complete rebuild and is made different from the ground up, supporting nested and multiple sidebars, and doing away with any 'fixed' positions. While it's simpler, it also means it's more basic, allowing you to fully design it to your hearts content.",
         code: "sidebar",
-        usage: `// Define your FAQ items
-    const faqItems: FAQTypes[] = [
-      {
-        question: "What is this product?",
-        category: "General",
-        answer: "This is a fantastic product that solves all your problems.",
-      },
-      {
-        question: "How much does it cost?",
-        category: "Pricing",
-        answer: "Our pricing starts at $9.99 per month with a free tier available.",
-      },
-      {
-        question: "Do you offer support?",
-        category: "Support",
-        answer: "Yes, we offer 24/7 support for all paid plans.",
-        footer: (
-          <a href="#" className="text-primary hover:underline">
-            Contact our support team
-          </a>
-        ),
-      },
-    ];
-    
-    // Use the FAQ component
-    <FAQ 
-      faq={faqItems} 
-      title="Frequently Asked Questions" 
-    />`,
+        usage: `<Sidebar
+  name={name}
+  position={position}
+  collapsed={collapsed}
+  onCollapse={onCollapse}
+  sidebarContent={sidebarContent}
+  onContentChange={onContentChange}
+  theme="card"
+>
+  <SidebarHeader>
+    <div className={...}>
+      Dashboard
+    </div>
+  </SidebarHeader>
+  <SidebarSeparator className={cn(collapsed ? "hidden" : "block")} />
+  <SidebarContent>
+    <SidebarNav>
+      <SidebarButton
+        href="/"
+        icon={<HomeIcon className="h-5 w-5" />}
+        active={pathname === "/"}
+      >
+        Home
+      </SidebarButton>
+      <SidebarButton
+        href="/dashboard"
+        icon={<LayoutDashboardIcon className="h-5 w-5" />}
+        active={pathname === "/dashboard"}
+      >
+        Dashboard
+      </SidebarButton>
+    </SidebarNav>
+    <SidebarSeparator />
+  </SidebarContent>
+</Sidebar>`,
         alternativeExamples: [
             {
                 title: "Toggling sidebars from sidebars",

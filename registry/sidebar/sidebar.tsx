@@ -6,17 +6,31 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as tabler from "@tabler/icons-react";
+import { SidebarBaseProps, SidebarContentType } from "@/types/sidebar";
 
-// Add a variant prop to control the collapse behavior
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
+// Define types for our sidebar context
+type SidebarContextType = {
+    collapsed: boolean;
+    setCollapsed: (value: boolean) => void;
+    name: string;
+    variant: "default" | "hidden";
+    collapsible: boolean; // Add collapsible to context
+
+    sidebarContent: SidebarContentType;
+    setContent: (content: SidebarContentType) => void;
+};
+
+// Create a context for the sidebar
+const SidebarContext = React.createContext<SidebarContextType | undefined>(
+    undefined
+);
+
+// Add content to the sidebar props
+interface SidebarProps
+    extends React.HTMLAttributes<HTMLDivElement>,
+        SidebarBaseProps {
     children: React.ReactNode;
-    className?: string;
-    collapsed?: boolean;
-    onCollapse?: (collapsed: boolean) => void;
-    position?: "left" | "right";
-    defaultCollapsed?: boolean;
-    name?: string;
-    variant?: "default" | "hidden"; // New prop for collapse behavior
+    collapsible?: boolean; // Add new collapsible prop
 }
 
 const SIDEBAR_COLLAPSED_PREFIX = "sidebar-collapsed";
@@ -48,19 +62,6 @@ const setCookieValue = (name: string, value: string, days: number = 365) => {
     document.cookie = name + "=" + value + expires + "; path=/";
 };
 
-// Create a context to share collapsed state between sidebar components
-const SidebarContext = React.createContext<{
-    collapsed: boolean;
-    setCollapsed: (value: boolean) => void;
-    name: string;
-    variant: "default" | "hidden";
-}>({
-    collapsed: false,
-    setCollapsed: () => {},
-    name: "default",
-    variant: "default",
-});
-
 export function useSidebar() {
     const context = React.useContext(SidebarContext);
     if (!context) {
@@ -77,7 +78,10 @@ export function Sidebar({
     position = "left",
     defaultCollapsed = false,
     name = "default",
-    variant = "default", // Default to the current behavior
+    variant = "default",
+    collapsible = true, // Default to true for backward compatibility
+    sidebarContent: controlledContent,
+    onContentChange,
     ...props
 }: SidebarProps) {
     const cookieName = getSidebarCookieName(name);
@@ -85,22 +89,68 @@ export function Sidebar({
     // Initialize with defaultCollapsed
     const [internalCollapsed, setInternalCollapsed] =
         React.useState(defaultCollapsed);
-    // Only update from cookie if there is a cookie value
+
+    // State for content
+    const [internalContent, setInternalContent] =
+        React.useState<SidebarContentType>(controlledContent || null);
+
+    // Only update from cookie if there is a cookie value and sidebar is collapsible
     React.useEffect(() => {
-        const cookieValue = getCookieValue(cookieName);
-        if (cookieValue !== undefined) {
-            setInternalCollapsed(cookieValue === "true");
+        if (collapsible) {
+            const cookieValue = getCookieValue(cookieName);
+            if (cookieValue !== undefined) {
+                setInternalCollapsed(cookieValue === "true");
+            }
         }
-    }, [cookieName]);
+    }, [cookieName, collapsible]);
+
+    // Update internal content when controlled content changes
+    React.useEffect(() => {
+        if (controlledContent !== undefined) {
+            setInternalContent(controlledContent);
+        }
+    }, [controlledContent]);
 
     const collapsed = controlledCollapsed ?? internalCollapsed;
 
     const handleCollapse = (newValue: boolean) => {
-        setInternalCollapsed(newValue);
-        // Save to cookie
-        setCookieValue(cookieName, String(newValue));
-        onCollapse?.(newValue);
+        // Only allow collapsing if the sidebar is collapsible
+        if (collapsible) {
+            setInternalCollapsed(newValue);
+            // Save to cookie
+            setCookieValue(cookieName, String(newValue));
+            onCollapse?.(newValue);
+        }
     };
+
+    const handleContentChange = (newContent: SidebarContentType) => {
+        setInternalContent(newContent);
+        onContentChange?.(newContent);
+    };
+
+    // If sidebar is collapsed with hidden variant, show a button to expand it
+    // if (variant === "hidden" && collapsed) {
+    //     return (
+    //         <>
+    //             <Button
+    //                 variant="ghost"
+    //                 size="icon"
+    //                 className={cn(
+    //                     "fixed z-10 h-8 w-8 border hover:bg-sidebar-accent",
+    //                     position === "left" ? "left-0 top-4" : "right-0 top-4"
+    //                 )}
+    //                 onClick={() => handleCollapse(false)}
+    //             >
+    //                 {position === "left" ? (
+    //                     <tabler.IconLayoutSidebarLeftExpandFilled className="h-4 w-4" />
+    //                 ) : (
+    //                     <tabler.IconLayoutSidebarRightExpandFilled className="h-4 w-4" />
+    //                 )}
+    //             </Button>
+    //             <aside className="w-[1px] opacity-0 transition-all duration-300 ease-in-out" />
+    //         </>
+    //     );
+    // }
 
     return (
         <SidebarContext.Provider
@@ -109,21 +159,22 @@ export function Sidebar({
                 setCollapsed: handleCollapse,
                 name,
                 variant,
+                collapsible, // Add collapsible to context
+                sidebarContent: internalContent,
+                setContent: handleContentChange,
             }}
         >
             <aside
                 className={cn(
-                    "relative flex h-full flex-none flex-col transition-all duration-300 ease-in-out",
-                    // Modify the width based on the variant
+                    "relative flex h-full flex-none flex-col overflow-x-hidden transition-all duration-300 ease-in-out",
                     variant === "default"
                         ? collapsed
                             ? "w-16"
                             : "w-64"
                         : collapsed
-                          ? "w-0 overflow-hidden"
+                          ? "w-0"
                           : "w-64",
                     position === "right" ? "border-l" : "border-r",
-                    // Hide border when completely collapsed for hidden variant
                     variant === "hidden" && collapsed && "border-0",
                     className
                 )}
@@ -137,7 +188,6 @@ export function Sidebar({
     );
 }
 
-// Update the SidebarHeader to handle the hidden variant
 export function SidebarHeader({
     children,
     className,
@@ -145,64 +195,53 @@ export function SidebarHeader({
     ...props
 }: Omit<
     SidebarProps,
-    "collapsed" | "onCollapse" | "defaultCollapsed" | "name" | "variant"
+    | "collapsed"
+    | "onCollapse"
+    | "defaultCollapsed"
+    | "name"
+    | "variant"
+    | "sidebarContent"
+    | "onContentChange"
+    | "collapsible"
 >) {
-    const { collapsed, setCollapsed, variant } =
-        React.useContext(SidebarContext);
+    const { collapsed, setCollapsed, collapsible } = useSidebar();
 
     const handleCollapse = () => {
         setCollapsed(!collapsed);
     };
 
-    // For hidden variant when collapsed, we need to render the toggle button outside
-    if (variant === "hidden" && collapsed) {
-        return (
-            <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                    "absolute z-10 h-8 w-8 border hover:bg-sidebar-accent",
-                    position === "left" ? "left-0 top-4" : "right-0 top-4"
-                )}
-                onClick={handleCollapse}
-            >
-                {position === "left" ? (
-                    <tabler.IconLayoutSidebarLeftExpandFilled className="h-4 w-4" />
-                ) : (
-                    <tabler.IconLayoutSidebarRightExpandFilled className="h-4 w-4" />
-                )}
-            </Button>
-        );
-    }
-
     return (
         <div
             className={cn(
                 "flex w-full justify-between gap-1",
-                collapsed ? "flex-col-reverse items-center" : "flex-row",
+                collapsed
+                    ? "flex-col-reverse items-center"
+                    : "flex-row items-center",
                 className
             )}
             {...props}
         >
             {children}
-            <Button
-                variant="ghost"
-                size="icon"
-                className={cn("h-8 w-8 border hover:bg-sidebar-accent")}
-                onClick={handleCollapse}
-            >
-                {position === "left" ? (
-                    collapsed ? (
-                        <tabler.IconLayoutSidebarLeftExpandFilled className="h-4 w-4" />
+            {collapsible && (
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className={cn("h-8 w-8 border hover:bg-sidebar-accent")}
+                    onClick={handleCollapse}
+                >
+                    {position === "left" ? (
+                        collapsed ? (
+                            <tabler.IconLayoutSidebarLeftExpandFilled className="h-4 w-4" />
+                        ) : (
+                            <tabler.IconLayoutSidebarLeftCollapseFilled className="h-4 w-4" />
+                        )
+                    ) : collapsed ? (
+                        <tabler.IconLayoutSidebarRightExpandFilled className="h-4 w-4" />
                     ) : (
-                        <tabler.IconLayoutSidebarLeftCollapseFilled className="h-4 w-4" />
-                    )
-                ) : collapsed ? (
-                    <tabler.IconLayoutSidebarRightExpandFilled className="h-4 w-4" />
-                ) : (
-                    <tabler.IconLayoutSidebarRightCollapseFilled className="h-4 w-4" />
-                )}
-            </Button>
+                        <tabler.IconLayoutSidebarRightCollapseFilled className="h-4 w-4" />
+                    )}
+                </Button>
+            )}
         </div>
     );
 }
@@ -213,10 +252,14 @@ export function SidebarContent({
     ...props
 }: Omit<
     SidebarProps,
-    "collapsed" | "onCollapse" | "defaultCollapsed" | "name"
+    | "collapsed"
+    | "onCollapse"
+    | "defaultCollapsed"
+    | "name"
+    | "variant"
+    | "sidebarContent"
+    | "onContentChange"
 >) {
-    const { collapsed } = React.useContext(SidebarContext);
-
     return (
         <div className={cn("flex-1 overflow-auto", className)} {...props}>
             {children}
@@ -391,4 +434,21 @@ export function SidebarSeparator({
             {...props}
         />
     );
+}
+
+// New component to render dynamic content
+interface SidebarDynamicContentProps {
+    renderContent: (content: SidebarContentType) => React.ReactNode;
+    fallback?: React.ReactNode;
+}
+
+export function SidebarDynamicContent({
+    renderContent,
+    fallback,
+}: SidebarDynamicContentProps) {
+    const { sidebarContent } = useSidebar();
+    if (!sidebarContent && fallback) {
+        return <>{fallback}</>;
+    }
+    return <>{sidebarContent ? renderContent(sidebarContent) : null}</>;
 }

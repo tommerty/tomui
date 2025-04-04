@@ -1,12 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import {
     Sidebar,
     SidebarButton,
-    SidebarContent,
+    SidebarContent, // This is the component
     SidebarGroup,
-    SidebarGroupAction,
     SidebarGroupContent,
     SidebarGroupHeader,
     SidebarGroupLabel,
@@ -16,72 +14,71 @@ import {
 } from "@/registry/sidebar/sidebar";
 import { HomeIcon, LayoutDashboardIcon, SettingsIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { IconDotsVertical } from "@tabler/icons-react";
+import { SidebarContentType } from "@/types/sidebar"; // Import the type with the new name
+import { useSidebarQuery } from "@/hooks/use-sidebar-query";
+import { cn } from "@/lib/utils";
 
 interface DashboardSidebarProps {
     collapsed?: boolean;
     onCollapse?: (collapsed: boolean) => void;
     position?: "left" | "right";
     name?: string;
+
+    sidebarContent?: SidebarContentType;
+    onContentChange?: (content: SidebarContentType) => void;
 }
 
 export function DashboardSidebar({
-    collapsed = true,
+    collapsed,
     position,
     onCollapse,
-    name,
+    name = "dashboard-sidebar",
+    sidebarContent,
+    onContentChange,
 }: DashboardSidebarProps) {
     const pathname = usePathname();
+
+    // Optional: Use Tanstack Query for state management
+    // const { collapsed: queryCollapsed, setCollapsed } = useSidebarQuery(name);
+    // const actualCollapsed = collapsed ?? queryCollapsed;
+    // const handleCollapse = onCollapse ?? setCollapsed;
+
     return (
         <Sidebar
             name={name}
             position={position}
             collapsed={collapsed}
             onCollapse={onCollapse}
-            defaultCollapsed={collapsed} // Add this line
+            sidebarContent={sidebarContent}
+            onContentChange={onContentChange}
+            collapsible={false}
         >
             <SidebarHeader>
                 <div
                     className={`font-semibold ${collapsed ? "hidden" : "block"}`}
                 >
-                    My App
+                    Dashboard
                 </div>
             </SidebarHeader>
-
+            <SidebarSeparator className={cn(collapsed ? "hidden" : "block")} />
             <SidebarContent>
-                <SidebarGroup>
-                    <SidebarGroupHeader>
-                        <SidebarGroupLabel>Home</SidebarGroupLabel>
-                        <SidebarGroupAction>
-                            <IconDotsVertical className="h-4 w-4" />
-                        </SidebarGroupAction>
-                    </SidebarGroupHeader>
-                    <SidebarGroupContent>
-                        <SidebarButton
-                            href="/"
-                            icon={<HomeIcon className="h-5 w-5" />}
-                            active={pathname === "/"}
-                        >
-                            Home
-                        </SidebarButton>
-
-                        <SidebarButton
-                            href="/dashboard"
-                            icon={<LayoutDashboardIcon className="h-5 w-5" />}
-                            active={pathname === "/dashboard"}
-                        >
-                            Dashboard
-                        </SidebarButton>
-                        <SidebarSeparator />
-                        <SidebarButton
-                            href="/settings"
-                            icon={<SettingsIcon className="h-5 w-5" />}
-                            active={pathname === "/settings"}
-                        >
-                            Settings
-                        </SidebarButton>
-                    </SidebarGroupContent>
-                </SidebarGroup>
+                <SidebarNav>
+                    <SidebarButton
+                        href="/"
+                        icon={<HomeIcon className="h-5 w-5" />}
+                        active={pathname === "/"}
+                    >
+                        Home
+                    </SidebarButton>
+                    <SidebarButton
+                        href="/dashboard"
+                        icon={<LayoutDashboardIcon className="h-5 w-5" />}
+                        active={pathname === "/dashboard"}
+                    >
+                        Dashboard
+                    </SidebarButton>
+                </SidebarNav>
+                <SidebarSeparator />
             </SidebarContent>
         </Sidebar>
     );

@@ -4,7 +4,6 @@ import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as tabler from "@tabler/icons-react";
 import { SidebarBaseProps, SidebarContentType } from "@/types/sidebar";
 
@@ -17,10 +16,9 @@ type SidebarContextType = {
     setCollapsed: (value: boolean) => void;
     name: string;
     variant: "default" | "hidden";
-    collapsible: boolean; // Add collapsible to context
+    collapsible: boolean;
     position: "left" | "right";
-    theme: SidebarTheme; // Add theme to context
-
+    theme: SidebarTheme;
     sidebarContent: SidebarContentType;
     setContent: (content: SidebarContentType) => void;
 };
@@ -35,10 +33,10 @@ interface SidebarProps
     extends React.HTMLAttributes<HTMLDivElement>,
         SidebarBaseProps {
     children: React.ReactNode;
-    collapsible?: boolean; // Add new collapsible prop
-    theme?: SidebarTheme; // Add theme prop
-    collapsedWidth?: string; // New prop for collapsed width
-    expandedWidth?: string; // New prop for expanded width
+    collapsible?: boolean;
+    theme?: SidebarTheme;
+    collapsedWidth?: string;
+    expandedWidth?: string;
 }
 
 const SIDEBAR_COLLAPSED_PREFIX = "sidebar-collapsed";
@@ -78,6 +76,7 @@ export function useSidebar() {
     return context;
 }
 
+// Main Sidebar Component
 export function Sidebar({
     children,
     className,
@@ -87,12 +86,12 @@ export function Sidebar({
     defaultCollapsed = false,
     name = "default",
     variant = "default",
-    theme = "default", // Add theme prop with default value
-    collapsible = true, // Default to true for backward compatibility
+    theme = "default",
+    collapsible = true,
     sidebarContent: controlledContent,
     onContentChange,
-    collapsedWidth = "w-16", // Default to current value
-    expandedWidth = "w-64", // Default to current value
+    collapsedWidth = "w-16",
+    expandedWidth = "w-64",
     ...props
 }: SidebarProps) {
     const cookieName = getSidebarCookieName(name);
@@ -145,11 +144,11 @@ export function Sidebar({
                 setCollapsed: handleCollapse,
                 name,
                 variant,
-                collapsible, // Add collapsible to context
+                collapsible,
                 sidebarContent: internalContent,
                 setContent: handleContentChange,
                 position,
-                theme, // Add theme to context
+                theme,
             }}
         >
             <aside
@@ -185,6 +184,7 @@ export function Sidebar({
     );
 }
 
+// Sidebar Header Component
 export function SidebarHeader({
     children,
     className,
@@ -245,6 +245,7 @@ export function SidebarHeader({
     );
 }
 
+// Sidebar Content Component
 export function SidebarContent({
     children,
     className,
@@ -266,7 +267,23 @@ export function SidebarContent({
     );
 }
 
-// Simple SidebarButton component based on the styles from sidebar-nav.tsx
+// Sidebar Navigation Component
+export function SidebarNav({
+    children,
+    className,
+    ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+    return (
+        <nav
+            className={cn("flex flex-col items-center gap-0.5", className)}
+            {...props}
+        >
+            {children}
+        </nav>
+    );
+}
+
+// Sidebar Button Component
 interface SidebarButtonProps
     extends React.ComponentPropsWithoutRef<typeof Button> {
     href?: string;
@@ -310,15 +327,7 @@ export function SidebarButton({
     );
 }
 
-// Simple container for sidebar buttons
-interface SidebarGroupWithLabelProps
-    extends React.HTMLAttributes<HTMLDivElement> {
-    label: string;
-    children: React.ReactNode;
-}
-
-// Add this component after the existing SidebarGroup component
-// Keep the existing SidebarGroup component but modify it to be a container
+// Sidebar Group Components
 export function SidebarGroup({
     children,
     className,
@@ -334,7 +343,6 @@ export function SidebarGroup({
     );
 }
 
-// Add a SidebarGroupHeader component to contain the label and action
 export function SidebarGroupHeader({
     children,
     className,
@@ -351,7 +359,6 @@ export function SidebarGroupHeader({
     );
 }
 
-// Add a SidebarGroupLabel component
 export function SidebarGroupLabel({
     children,
     className,
@@ -370,7 +377,6 @@ export function SidebarGroupLabel({
     );
 }
 
-// Add a SidebarGroupAction component
 export function SidebarGroupAction({
     children,
     className,
@@ -392,7 +398,6 @@ export function SidebarGroupAction({
     );
 }
 
-// Add a SidebarGroupContent component for the navigation items
 export function SidebarGroupContent({
     children,
     className,
@@ -407,22 +412,8 @@ export function SidebarGroupContent({
         </nav>
     );
 }
-export function SidebarNav({
-    children,
-    className,
-    ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-    return (
-        <nav
-            className={cn("flex flex-col items-center gap-0.5", className)}
-            {...props}
-        >
-            {children}
-        </nav>
-    );
-}
 
-// Sidebar Separator
+// Sidebar Separator Component
 export function SidebarSeparator({
     className,
     ...props
@@ -435,7 +426,7 @@ export function SidebarSeparator({
     );
 }
 
-// New component to render dynamic content
+// Sidebar Dynamic Content Component
 interface SidebarDynamicContentProps {
     renderContent: (content: SidebarContentType) => React.ReactNode;
     fallback?: React.ReactNode;

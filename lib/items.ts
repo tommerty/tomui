@@ -19,6 +19,7 @@ import CallToActionExample, {
 import { FAQExample } from "@/components/examples/faq";
 import { RootLayoutClient } from "@/components/examples/sidebar/root";
 import { RootLayoutClient2 } from "@/components/examples/sidebar/root2";
+import { RootLayoutClient3 } from "@/components/examples/sidebar/root3";
 
 export type ComponentItem = {
     title: string;
@@ -568,9 +569,14 @@ export const components: ComponentItem[] = [
     />`,
         alternativeExamples: [
             {
-                title: "Highlight",
-                description: "A highlighted version with primary color accents",
+                title: "Toggling sidebars from sidebars",
+                description: "Clean example of toggling sidebars from sidebars",
                 exampleComponent: RootLayoutClient2,
+            },
+            {
+                title: "Nested",
+                description: "Nested layouts, similar to this page",
+                exampleComponent: RootLayoutClient3,
             },
         ],
     },

@@ -17,6 +17,7 @@ import CallToActionExample, {
     CallToActionMinimal,
 } from "@/components/examples/call-to-action";
 import { FAQExample } from "@/components/examples/faq";
+import { RootLayoutClient } from "@/components/examples/sidebar/root";
 
 export type ComponentItem = {
     title: string;
@@ -452,6 +453,89 @@ export const components: ComponentItem[] = [
         description:
             "A styled accordion, based off the shadcn/ui accordion component. Provides a customizable FAQ component for answering common questions and providing support. Supports categories, collapsible items, and responsive design.",
         code: "faq",
+        usage: `// Define your FAQ items
+    const faqItems: FAQTypes[] = [
+      {
+        question: "What is this product?",
+        category: "General",
+        answer: "This is a fantastic product that solves all your problems.",
+      },
+      {
+        question: "How much does it cost?",
+        category: "Pricing",
+        answer: "Our pricing starts at $9.99 per month with a free tier available.",
+      },
+      {
+        question: "Do you offer support?",
+        category: "Support",
+        answer: "Yes, we offer 24/7 support for all paid plans.",
+        footer: (
+          <a href="#" className="text-primary hover:underline">
+            Contact our support team
+          </a>
+        ),
+      },
+    ];
+    
+    // Use the FAQ component
+    <FAQ 
+      faq={faqItems} 
+      title="Frequently Asked Questions" 
+    />`,
+    },
+    {
+        title: "Sidebar",
+        group: "Application",
+        iconName: "IconLayoutSidebar",
+        example: RootLayoutClient,
+        exampleName: "Sidebar 1",
+        inspiredBy: {
+            title: "shadcn/ui",
+            url: "https://ui.shadcn.com/docs/components/sidebar",
+        },
+        props: [
+            {
+                name: "faq",
+                type: "FAQTypes[]",
+                default: "[]",
+                description: "Array of FAQ items",
+            },
+            {
+                name: "title",
+                type: "string",
+                default: "undefined",
+                description: "The title of the FAQ section",
+            },
+            // Properties inside each FAQTypes item
+            {
+                name: "faq[].question",
+                type: "string",
+                required: true,
+                description: "The question text to display in the FAQ item",
+            },
+            {
+                name: "faq[].answer",
+                type: "string",
+                required: true,
+                description: "The answer text for the FAQ item",
+            },
+            {
+                name: "faq[].category",
+                type: "string",
+                default: "Uncategorized",
+                description: "Optional category to group FAQ items",
+            },
+            {
+                name: "faq[].footer",
+                type: "React.ReactNode",
+                description:
+                    "Optional additional content to display below the answer, such as links or buttons",
+            },
+        ],
+
+        description:
+            "While I love shad's sidebar component and the power it provides, looking in the issues and discussions on the repository some things start to emerge. Mostly, it's difficult to implement multiple sidebars, on different sections or nested within your application. TomUI Sidebar is a complete rebuild and is made different from the ground up, supporting nested and multiple sidebars, and doing away with any 'fixed' positions. While it's simpler, it also means it's more basic, allowing you to fully design it to your hearts content.",
+        code: "sidebar",
         usage: `// Define your FAQ items
     const faqItems: FAQTypes[] = [
       {

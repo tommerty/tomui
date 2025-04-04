@@ -201,7 +201,7 @@ export function SidebarHeader({
     | "onContentChange"
     | "collapsible"
 >) {
-    const { collapsed, setCollapsed, collapsible } = useSidebar();
+    const { collapsed, setCollapsed, collapsible, variant } = useSidebar();
 
     const handleCollapse = () => {
         setCollapsed(!collapsed);
@@ -212,7 +212,9 @@ export function SidebarHeader({
             className={cn(
                 "flex w-full justify-between gap-1",
                 collapsed
-                    ? "flex-col-reverse items-center"
+                    ? variant === "hidden"
+                        ? "flex-row items-center"
+                        : "flex-col-reverse items-center"
                     : "flex-row items-center",
                 className
             )}

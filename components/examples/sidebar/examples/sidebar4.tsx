@@ -60,9 +60,7 @@ export function DashboardSidebar4({
             expandedWidth="w-48"
         >
             <SidebarHeader>
-                <div
-                    className={`flex items-center gap-1 font-semibold ${collapsed ? "hidden" : "block"}`}
-                >
+                <div className={`flex items-center gap-1 font-semibold`}>
                     <IconFileText size={18} />
                     Content
                 </div>

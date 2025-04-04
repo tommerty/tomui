@@ -86,9 +86,9 @@ export function DashboardSidebar3({
                         Home
                     </SidebarButton>
                     <SidebarButton
-                        href="/dashboard"
+                        href="#"
                         icon={<LayoutDashboardIcon className="h-5 w-5" />}
-                        active={pathname === "/dashboard"}
+                        active={pathname === "#"}
                     >
                         Dashboard
                     </SidebarButton>
@@ -98,7 +98,7 @@ export function DashboardSidebar3({
                         onClick={toggleSecondSidebar}
                         active={!secondSidebarCollapsed}
                     >
-                        Toggle Content
+                        Edit
                     </SidebarButton>
                 </SidebarNav>
                 <SidebarSeparator />

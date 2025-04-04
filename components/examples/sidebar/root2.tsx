@@ -103,6 +103,8 @@ export function RootLayoutClient2() {
                     collapsed={leftSidebarCollapsed}
                     onCollapse={setLeftSidebarCollapsed}
                     name="left-sidebar-sidebar2"
+                    secondSidebarCollapsed={left2SidebarCollapsed}
+                    onSecondSidebarCollapse={setLeft2SidebarCollapsed}
                 />
                 <DashboardSidebar4
                     collapsed={left2SidebarCollapsed}

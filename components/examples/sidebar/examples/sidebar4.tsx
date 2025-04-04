@@ -18,7 +18,7 @@ import { SidebarContentType } from "@/types/sidebar"; // Import the type with th
 import { useSidebarQuery } from "@/hooks/use-sidebar-query";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import { IconPencil } from "@tabler/icons-react";
+import { IconFileText, IconPencil } from "@tabler/icons-react";
 import DummyForm1 from "./dummyform";
 
 interface DashboardSidebarProps {
@@ -56,14 +56,14 @@ export function DashboardSidebar4({
             onContentChange={onContentChange}
             variant="hidden"
             theme="card"
-            collapsible={false}
             className="pl-0"
             expandedWidth="w-48"
         >
             <SidebarHeader>
                 <div
-                    className={`font-semibold ${collapsed ? "hidden" : "block"}`}
+                    className={`flex items-center gap-1 font-semibold ${collapsed ? "hidden" : "block"}`}
                 >
+                    <IconFileText size={18} />
                     Content
                 </div>
             </SidebarHeader>

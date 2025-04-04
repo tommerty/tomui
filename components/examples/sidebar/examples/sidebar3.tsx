@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import { SidebarContentType } from "@/types/sidebar"; // Import the type with the new name
 import { useSidebarQuery } from "@/hooks/use-sidebar-query";
 import { cn } from "@/lib/utils";
+import { IconFileText } from "@tabler/icons-react";
 
 interface DashboardSidebarProps {
     collapsed?: boolean;
@@ -26,6 +27,9 @@ interface DashboardSidebarProps {
 
     sidebarContent?: SidebarContentType;
     onContentChange?: (content: SidebarContentType) => void;
+    // Add these new props
+    secondSidebarCollapsed?: boolean;
+    onSecondSidebarCollapse?: (collapsed: boolean) => void;
 }
 
 export function DashboardSidebar3({
@@ -35,6 +39,9 @@ export function DashboardSidebar3({
     name = "dashboard-sidebar",
     sidebarContent,
     onContentChange,
+    // Add these new props to the function parameters
+    secondSidebarCollapsed,
+    onSecondSidebarCollapse,
 }: DashboardSidebarProps) {
     const pathname = usePathname();
 
@@ -42,6 +49,13 @@ export function DashboardSidebar3({
     // const { collapsed: queryCollapsed, setCollapsed } = useSidebarQuery(name);
     // const actualCollapsed = collapsed ?? queryCollapsed;
     // const handleCollapse = onCollapse ?? setCollapsed;
+
+    // Add a function to toggle the second sidebar
+    const toggleSecondSidebar = () => {
+        if (onSecondSidebarCollapse) {
+            onSecondSidebarCollapse(!secondSidebarCollapsed);
+        }
+    };
 
     return (
         <Sidebar
@@ -77,6 +91,14 @@ export function DashboardSidebar3({
                         active={pathname === "/dashboard"}
                     >
                         Dashboard
+                    </SidebarButton>
+                    {/* Add a new button to toggle the second sidebar */}
+                    <SidebarButton
+                        icon={<IconFileText className="h-5 w-5" />}
+                        onClick={toggleSecondSidebar}
+                        active={!secondSidebarCollapsed}
+                    >
+                        Toggle Content
                     </SidebarButton>
                 </SidebarNav>
                 <SidebarSeparator />

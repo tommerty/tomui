@@ -71,7 +71,7 @@ export function RootLayoutClient() {
     };
 
     return (
-        <div className="flex h-full w-full flex-col overflow-hidden rounded-lg">
+        <div className="flex h-full w-full flex-col overflow-hidden rounded-lg bg-muted">
             <div className="border-b bg-sidebar">
                 <div className="flex items-center p-2">
                     <div className="flex flex-1 items-center space-x-4">
@@ -101,8 +101,8 @@ export function RootLayoutClient() {
                     onCollapse={setLeftSidebarCollapsed}
                     name="left-sidebar-sidebar1"
                 />
-                <main className="flex-1 overflow-auto bg-background">
-                    <div className="mx-auto max-w-5xl p-3">
+                <main className="flex-1 overflow-auto bg-muted">
+                    <div className="mx-auto max-w-5xl p-2">
                         {/* Analytics Section */}
                         <section className="space-y-4">
                             <p className="text-2xl font-bold">

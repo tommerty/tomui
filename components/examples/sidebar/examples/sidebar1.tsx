@@ -51,7 +51,7 @@ export function DashboardSidebar({
             onCollapse={onCollapse}
             sidebarContent={sidebarContent}
             onContentChange={onContentChange}
-            collapsible={false}
+            theme="card"
         >
             <SidebarHeader>
                 <div

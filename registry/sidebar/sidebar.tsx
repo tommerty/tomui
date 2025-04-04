@@ -8,6 +8,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as tabler from "@tabler/icons-react";
 import { SidebarBaseProps, SidebarContentType } from "@/types/sidebar";
 
+// Define theme options for the sidebar
+export type SidebarTheme = "default" | "card";
+
 // Define types for our sidebar context
 type SidebarContextType = {
     collapsed: boolean;
@@ -15,6 +18,8 @@ type SidebarContextType = {
     name: string;
     variant: "default" | "hidden";
     collapsible: boolean; // Add collapsible to context
+    position: "left" | "right";
+    theme: SidebarTheme; // Add theme to context
 
     sidebarContent: SidebarContentType;
     setContent: (content: SidebarContentType) => void;
@@ -31,6 +36,7 @@ interface SidebarProps
         SidebarBaseProps {
     children: React.ReactNode;
     collapsible?: boolean; // Add new collapsible prop
+    theme?: SidebarTheme; // Add theme prop
 }
 
 const SIDEBAR_COLLAPSED_PREFIX = "sidebar-collapsed";
@@ -79,6 +85,7 @@ export function Sidebar({
     defaultCollapsed = false,
     name = "default",
     variant = "default",
+    theme = "default", // Add theme prop with default value
     collapsible = true, // Default to true for backward compatibility
     sidebarContent: controlledContent,
     onContentChange,
@@ -127,31 +134,6 @@ export function Sidebar({
         setInternalContent(newContent);
         onContentChange?.(newContent);
     };
-
-    // If sidebar is collapsed with hidden variant, show a button to expand it
-    // if (variant === "hidden" && collapsed) {
-    //     return (
-    //         <>
-    //             <Button
-    //                 variant="ghost"
-    //                 size="icon"
-    //                 className={cn(
-    //                     "fixed z-10 h-8 w-8 border hover:bg-sidebar-accent",
-    //                     position === "left" ? "left-0 top-4" : "right-0 top-4"
-    //                 )}
-    //                 onClick={() => handleCollapse(false)}
-    //             >
-    //                 {position === "left" ? (
-    //                     <tabler.IconLayoutSidebarLeftExpandFilled className="h-4 w-4" />
-    //                 ) : (
-    //                     <tabler.IconLayoutSidebarRightExpandFilled className="h-4 w-4" />
-    //                 )}
-    //             </Button>
-    //             <aside className="w-[1px] opacity-0 transition-all duration-300 ease-in-out" />
-    //         </>
-    //     );
-    // }
-
     return (
         <SidebarContext.Provider
             value={{
@@ -162,6 +144,8 @@ export function Sidebar({
                 collapsible, // Add collapsible to context
                 sidebarContent: internalContent,
                 setContent: handleContentChange,
+                position,
+                theme, // Add theme to context
             }}
         >
             <aside
@@ -176,11 +160,20 @@ export function Sidebar({
                           : "w-64",
                     position === "right" ? "border-l" : "border-r",
                     variant === "hidden" && collapsed && "border-0",
+                    theme === "default" && "",
+                    theme === "card" && "border-none p-2",
+                    theme === "card" && position === "left" && "pr-0",
+                    theme === "card" && position === "right" && "pl-0",
                     className
                 )}
                 {...props}
             >
-                <div className="flex h-full flex-col overflow-y-auto bg-sidebar p-2">
+                <div
+                    className={cn(
+                        "flex h-full flex-col overflow-y-auto overflow-x-hidden bg-sidebar p-2",
+                        theme === "card" && "rounded-md border"
+                    )}
+                >
                     {children}
                 </div>
             </aside>

@@ -7,7 +7,6 @@ on:
         paths-ignore:
             - "**/**.md"
             - "LICENSE"
-            - ".github/**"
     pull_request:
         branches:
             - main

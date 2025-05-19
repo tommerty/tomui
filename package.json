@@ -68,7 +68,7 @@
         "@semantic-release/git": "^10.0.1",
         "@semantic-release/github": "^11.0.1",
         "@types/hast": "^3.0.4",
-        "@types/node": "^20",
+        "@types/node": "^22",
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "@types/unist": "^3.0.3",
